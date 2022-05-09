@@ -1,0 +1,86 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>New Pass</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css" />
+</head>
+<body>
+      <!--Main Navigation-->
+  <header>
+    <style>
+      #intro {
+        background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+        height: 120vh;
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+
+      .navbar .nav-link {
+        color: #fff !important;
+      }
+    </style>
+
+  
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8">
+              <form class="bg-white rounded shadow-5-strong p-5" th:object="${account}" action="/newaccount" method="post">
+                <H1>ĐĂNG KÍ</H1> <br>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="password" id="form1Example1" class="form-control" name="newpassword" />
+                  <label class="form-label" for="form1Example1">Nhập mật khẩu mới</label>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input type="password" id="form1Example2" class="form-control" name="repassword"/>
+                  <label class="form-label" for="form1Example2" >Nhập lại mật khẩu</label>
+                </div>
+				<div th:each="err : ${#fields.errors('global')}" th:text="${err}" class="text-danger" />
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                  
+
+                  <div class="col text-center">
+                    <!-- Simple link -->
+                    <a href="#!">Quên mật khẩu?</a>
+                  </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">ĐĂNG KÍ</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+ 
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
+    <!-- Custom scripts -->
+  
+</body>
+</html>

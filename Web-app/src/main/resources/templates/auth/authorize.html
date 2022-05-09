@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/auth/layout::dynamic(~{::body})}">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+	<div class="container pt-5" ng-app="app" ng-controller="ctrl">
+		<h3 class="font-weight-bold">Phân quyền cho người dùng</h3>
+		<br>
+		<table ng-if="db" style="width: 100%" border="1"
+			class="table table-bordered table-definition mb-5">
+			<thead class="table-warning ">
+				<tr>
+					<th>Tên người dùng</th>
+					<th>Admin</th>
+					<th>Khách</th>
+					<th>Nhân viên</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="acc in db.accounts">
+					<th>{{acc.username}}</th>
+					<th ng-repeat="role in db.roles"><label class="form-contro">
+							<input type="checkbox" name="checkbox"
+							ng-checked="index_of(acc.username, role.id) >= 0"
+							ng-click="update(acc.username, role.id)">
+					</label></th>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<footer class="footer">
+		<div
+			class="d-sm-flex justify-content-center justify-content-sm-between">
+			<span
+				class="text-muted text-center text-sm-left d-block d-sm-inline-block">Bản
+				quyền © 2022. Bản Cao cấp <a href="https://www.bootstrapdash.com/"
+				target="_blank">MXgear company</a> Đã đăng ký Bản quyền.
+			</span> <span
+				class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sản
+				phẩm làm thủ công & được tạo bởi Mr.Minh<i
+				class="ti-heart text-danger ml-1"></i>
+			</span>
+		</div>
+	</footer>
+	<script>
+	let host = "http://localhost:8080/rest";
+	var app = angular.module("app",[]);
+	app.controller("ctrl",function($scope,$http){
+		$scope.form={}
+        $scope.items= []
+        $scope.reset = function(){
+            $scope.form.name = null;
+            
+        }
+        $scope.load_all = function(){
+            var url = `${host}/accounts`;
+            $http.get(url).then(resp => {
+                $scope.items = resp.data;
+                console.log("Success", resp)
+            }).catch(error => {
+                console.log("Error",error)
+            })
+        }
+        $scope.load_all();
+		$http.get("/rest/authorities/").then(resp => {
+			$scope.db = resp.data;
+			console.log(resp.data);
+		})
+		$scope.index_of = function(username,role){
+			return $scope.db.authorities
+				.findIndex(a => a.account.username == username && a.role.id == role)
+		}
+		$scope.update = function(username, role){
+			var index = $scope.index_of(username, role);
+			if(index >= 0){
+				var id = $scope.db.authorities[index].id;
+				$http.delete(`/rest/authorities/${id}`).then(resp => {
+					$scope.db.authorities.splice(index, 1);
+				})
+			}else{
+				var authority = {
+					account:{username:username},
+					role:{id:role}
+				};
+				
+				$http.post('/rest/authorities', authority).then(resp => {
+					$scope.db.authorities.push(resp.data);
+				});
+			}
+		}
+	});
+</script>
+</body>

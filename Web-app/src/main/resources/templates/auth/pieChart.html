@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/auth/layout::dynamic(~{::body})}">
+<head>
+<meta charset="utf-8" />
+<title>PIE</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+</head>
+<body>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+	<div id="container" style="height: 400px"></div>
+	<script th:inline="javascript">
+		Highcharts.chart('container', {
+			chart : {
+				type : 'pie',
+				options3d : {
+					enabled : true,
+					alpha : 50,
+					beta : 0
+				}
+			},
+			title : {
+				text : 'Biểu đồ thống kê tỉ lệ giao hàng'
+			},
+			tooltip : {
+				pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			plotOptions : {
+				pie : {
+					allowPointSelect : true,
+					cursor : 'pointer',
+					depth : 35,
+					dataLabels : {
+						enabled : true,
+						format : '{point.name}'
+					}
+				}
+			},
+			series : [ {
+				type : 'pie',
+				name : 'Ratio',
+				data : [ [ 'Đã giao', [[${user3}]] ], [ 'Chưa giao', [[${user2}]] ]  ]
+			} ]
+		});
+	</script>
+	
+	<br>
+	<footer class="footer">
+		<div
+			class="d-sm-flex justify-content-center justify-content-sm-between">
+			<span
+				class="text-muted text-center text-sm-left d-block d-sm-inline-block">Bản
+				quyền © 2022. Bản Cao cấp <a href="https://www.bootstrapdash.com/"
+				target="_blank">MXgear company</a> Đã đăng ký Bản quyền.
+			</span> <span
+				class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sản
+				phẩm làm thủ công & được tạo bởi Mr.Minh<i
+				class="ti-heart text-danger ml-1"></i>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

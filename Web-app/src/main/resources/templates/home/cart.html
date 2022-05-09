@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background: #eecda3;
+            background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
+            background: linear-gradient(to right, #eecda3, #ef629f);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="px-4 px-lg-0">
+        <!-- For demo purpose -->
+        <div class="container text-white py-5 text-center">
+            <h1 class="display-4">Shopping cart</h1>
+            
+        </div>
+        <!-- End -->
+		
+        <div class="pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                        <!-- Shopping cart table -->
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="p-2 px-3 text-uppercase">Id</div>
+                                        </th>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="p-2 px-3 text-uppercase">Name</div>
+                                        </th>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="py-2 text-uppercase">Price</div>
+                                        </th>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="py-2 text-uppercase">Quantity</div>
+                                        </th>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="py-2 text-uppercase">Amount</div>
+                                        </th>
+                                        <th scope="col" class="border-0 bg-light">
+                                            <div class="py-2 text-uppercase">Remove</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                
+									<form th:each="item: ${cart.itema}" th:action="@{/cart/update/__${item.id}__}" method="post">
+										<input type="hidden" name="id" value="${item.id}">
+										<tr>
+											<td th:text="${item.id}"></td>
+											<td th:text="${item.name}"></td>
+											<td>$ <span th:text="${item.price}"></span></td>
+											<td><input type="number" name="qty" th:value="${item.qty}"
+												onblur="this.form.submit()" style="width: 50px;"></td>
+											<td>$ <span th:text="${item.price * item.qty}" ></span></td>
+											<td><a th:href="@{/cart/remove/__${item.id}__}">Remove</a></td>
+										</tr>
+									</form>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td><span class="font-weight-bold" style="font-size: 25px">Tổng tiền:</span></td>
+											<td><span style="font-size: 25px" class="text-success">$ </span><span class="text-success" th:text="${total}" style="font-size: 25px">40000<span></td>
+											<td></td>
+										</tr>
+                            </table>
+                             <a href="/cart/clear" style="right: 10%; position: absolute;">CLEAR <i class="fa fa-eraser" aria-hidden="true"></i></a>
+                            <button type="button" onclick="location.href='/shop'" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</button>
+                        </div>
+                        <!-- End -->
+                        
+                    </div>
+                </div>
+
+                <div class="row py-5 p-4 bg-white rounded shadow-sm">
+                    <div class="col-lg-6">
+                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Coupon code</div>
+                        <div class="p-4">
+                            <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
+                            <div class="input-group mb-4 border rounded-pill p-2">
+                                <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3"
+                                    class="form-control border-0">
+                                <div class="input-group-append border-0">
+                                    <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i
+                                            class="fa fa-gift mr-2"></i>Apply coupon</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary
+                        </div>
+                        <div class="p-4">
+                            <ul class="list-unstyled mb-4">
+                                <li class="d-flex justify-content-between py-3 border-bottom"><strong
+                                        class="text-muted">Order Subtotal </strong><strong class="text-success">$ <span class="text-success" th:text="${total}" ></span></strong></li>
+                                <li class="d-flex justify-content-between py-3 border-bottom"><strong
+                                        class="text-muted">Shipping</strong><strong>$100.0</strong></li>
+                                <li class="d-flex justify-content-between py-3 border-bottom"><strong
+                                        class="text-muted">Total</strong>
+                                    <h3 class="font-weight-bold">$ <span class="text-danger" th:text="${total + 100}" ></span></h3>
+                                </li>
+                            </ul><a th:href="@{/checkout}" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

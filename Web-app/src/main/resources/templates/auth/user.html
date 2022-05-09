@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/auth/layout::dynamic(~{::body})}">
+<head>
+
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+</head>
+<body ng-app="app" ng-controller="ctrl">
+	<div class="col-lg-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Quản lí nhân viên</h4>
+				<p class="card-description">
+					<code>Phân quyền</code>
+				</p>
+				<div class="table-responsive pt-3">
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Tên người dùng</th>
+								<th>Tên đầy đủ</th>
+								<th>Email</th>
+								<th>Trạng thái</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in items">
+								<td>{{item.username}}</td>
+								<td>{{item.fullname}}</td>
+								<td>{{item.email}}</td>
+								<td>
+									<div class="progress">
+										<div class="progress-bar bg-success" role="progressbar"
+											style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+											aria-valuemax="100"></div>
+									</div>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<footer class="footer">
+		<div
+			class="d-sm-flex justify-content-center justify-content-sm-between">
+			<span
+				class="text-muted text-center text-sm-left d-block d-sm-inline-block">Bản
+				quyền © 2022. Bản Cao cấp <a href="https://www.bootstrapdash.com/"
+				target="_blank">MXgear company</a> Đã đăng ký Bản quyền.
+			</span> <span
+				class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sản
+				phẩm làm thủ công & được tạo bởi Mr.Minh<i
+				class="ti-heart text-danger ml-1"></i>
+			</span>
+		</div>
+	</footer>
+<script>
+    let host = "http://localhost:8080/rest";
+    const app = angular.module("app",[]);
+    app.controller("ctrl", function($scope, $http){
+        $scope.form={}
+        $scope.items= []
+        $scope.reset = function(){
+            $scope.form.name = null;
+        }
+        $scope.load_all = function(id){
+            
+            var url = `${host}/accounts/${id}`;
+            $http.get(url).then(resp => {
+                $scope.items = resp.data;
+                console.log("Success", resp)
+            }).catch(error => {
+                console.log("Error",error)
+            })
+        }
+        $scope.load_all("user");
+    })
+</script>
+</body>

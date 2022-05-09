@@ -1,0 +1,33 @@
+<style>
+	
+</style>
+<div class="myaccount-content" style="border: 3px solid;">
+	
+    <h3>Chi tiết đơn hàng</h3>
+    <div class="myaccount-table table-responsive text-center">
+
+    
+        <table class="table table-bordered" >
+  
+            <thead class="thead-light">
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
+                    <th>Thành tiền</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>  
+            <tbody>
+                <tr th:each="item : ${order}">
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.createdate}"></td>
+                    <td th:text="${item.status}"></td>
+                    <td th:text="${item.total}"></td>
+                    <td><a th:href="@{/view__${item.name}__}" class="check-btn sqr-btn ">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>

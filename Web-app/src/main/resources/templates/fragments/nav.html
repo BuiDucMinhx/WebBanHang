@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<!-- Starting Nav -->
+	<nav th:fragment="nav">
+    <div class="site-branding-area" >
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">	
+                    <div class="logo">
+                        <h1><a href="index.html">z<span>MX-Gear</span></a></h1>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="shopping-item">               																	
+                        <a href="/cart" ><span th:text="#{nav.cart}"></span > <span class="cart-amunt"></span> <i class="fa fa-shopping-cart"></i> <span class="product-count" th:text="${session.count}"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+    
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href = "/index" th:text="#{nav.home}">Trang chủ</a></li>
+                        <li><a href = "/about" th:text="#{nav.about}">Giới thiệu</a></li>
+                        <li><a href = "/shop" th:text="#{nav.shop}">Mua sắm</a></li>
+                     	<li><a>||</a> </li>
+						<li><a href="/manager" th:text="#{nav.manager}"><span><i class="fa fa-audio-description"  aria-hidden="true"></i></span > Quản lí </a></li>
+					
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    
+    <div class="slider-area">
+        <div class="zigzag-bottom"></div>
+        <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
+            
+            <div class="slide-bulletz">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ol class="carousel-indicators slide-indicators">
+                                <li data-target="#slide-list" data-slide-to="0" class="active"></li>
+                                <li data-target="#slide-list" data-slide-to="1"></li>
+                                <li data-target="#slide-list" data-slide-to="2"></li>
+                            </ol>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-inner" role="listbox" style="height: 350px">
+                <div class="item active">
+                    <div class="single-slide">
+                        <div class="slide-bg slide-one"></div>
+                        <div class="slide-text-wrapper">
+                            <div class="slide-text slide-text-wrapper">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <div class="slide-content">
+                                          
+                                                <h2 style="color : white ">We are awesome</h2>
+                                                
+                                                <p>Chúng tôi rất tuyệt vời, mang lại tất cả những gì bạn cần ...</p>
+                                                <a href="" class="readmore">Click Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="single-slide">
+                        <div class="slide-bg slide-two"></div>
+                        <div class="slide-text-wrapper">
+                            <div class="slide-text">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <div class="slide-content" >
+                                                <h2 style="color : white ">We are excellent</h2>
+                                                <p style="color : white ">Chúng tôi xuất xắc, dịch vụ đáp ứng bất kì lúc nào...</p>
+                                                <a style="color : white " href="" class="readmore">Click Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="single-slide">
+                        <div class="slide-bg slide-three"></div>
+                        <div class="slide-text-wrapper">
+                            <div class="slide-text">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <div class="slide-content" >
+                                                <h2 style="color : white ">We are superb</h2>
+                                                <p style="color : white ">Chúng tôi rất đỉnh, chúng tôi sẽ đưa bạn bay thật xa</p>
+                                                <a href="" class="readmore">Click Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>        
+    </div> <!-- End slider area -->
+    
+    <!-- Search vs Category-->
+	    <div class="row  vip" style="height: 80px">
+	    <!-- Search -->
+	    <div class="col-sm-9" style="margin-top: 15px">
+		<form style="margin-left: 25px " th:action="@{/search}" method="post">
+		  <input type="text" th:value="${keywords}" placeholder="Bạn muốn tìm sản phẩm?.." name="keywords">
+		  <button type="submit"><i class="fa fa-search"></i></button>
+		  
+		</form>
+		</div>
+    	<!-- Search -->
+	    
+	    <!-- Danh mục -->
+	    <div class=" collapse navbar-collapse js-navbar-collapse" >
+	        <ul class="nav navbar-nav " style="margin-left: 90px; margin-top: 15px">
+	        <li class="dropdown bg-success " style="color :white ; font-size: large;">
+	          <a href="#" class="dropdown-toggle " style="color :black; width: 260px " data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-list"></i>  <span th:text="#{nav.category}"></span ><span class="caret"></span></a>
+	          <ul class="dropdown-menu w-150" role="menu" style="width: 260px">  
+	          	<li th:each="item : ${categories}">	
+					<a th:href="@{/list__${item.id}__}" class="nav-item nav-link"><i class="fa fa-hand-o-right"></i> <span th:text = "${item.name}" > </span> </span></a>			
+					<div class="divider"></div>
+				</li>
+	          </ul>
+	        </li>
+	       </ul>
+		</div>
+		</div>
+    </div>
+    <!-- Danh mục -->
+    <!-- Search vs Category-->
+    </nav>
+    <!-- End Nav -->
+</body>
+</html>

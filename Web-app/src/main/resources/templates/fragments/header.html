@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+    <!-- Start Header -->
+    <div class="header-area" th:fragment= "header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="user-menu">
+                        <ul>
+                            <li><a href="/account" ><i class="fa fa-user"></i><span th:text="#{nav.account}"></span ></a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i> <span th:text="#{nav.favorite}"></span ></a></li>
+                            <li><a href="/cart"><i class="fa fa-user"></i> <span th:text="#{nav.cart}"></span ></a></li>
+                            <li><a href="/login"><i class="fa fa-user"></i> <span th:text="#{nav.login}"></span ></a></li>
+                            <li><a href="/auth/logoff"><i class="fa fa-user"></i> <span th:text="#{nav.logout}"></span ></a></li>
+                            
+                            <li>
+                            	<!-- Info User -->
+				                <main>
+									<h3 th:unless = "${#request.remoteUser}">
+										<i style="color: red">Chưa đăng nhập</i>
+									</h3>
+									<th:block th:if = "${#request.remoteUser}">
+										<ul>
+											<li> <span style="color: blue">Xin chào: </span><b>[[${#request.remoteUser}]]</b> </li>
+										</ul>
+									</th:block>	
+								</main>
+						  		<!-- Info User -->
+						  </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+                <div class="col-md-3 bg-danger">
+                    <div class="header-right" style="right:-150px; position:absolute;">
+                        <ul class="list-unstyled list-inline">
+                            
+                            <li class="dropdown dropdown-small">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value"> </span><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="?lang=vi">Việt Nam</a></li>
+                                    <li><a href="?lang=en">English</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div> <!-- End header area -->
+</body>
+</html>

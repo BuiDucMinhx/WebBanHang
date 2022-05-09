@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background: #eecda3;
+            background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
+            background: linear-gradient(to right, #eecda3, #ef629f);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="span-2c">  
+       <h3 class="tlt">Line Chart</h3>
+       <canvas id="viewchart1" height="300" width="400" style="width: 400px; height: 300px;"></canvas>
+       <script>
+             var lineChartData = {
+                  labels: [<c:forEach var="item" items="${listReceipt}">'${item.time}',</c:forEach>],
+                  datasets: [
+                       {
+                             fillColor: "#FC8213",
+                             data: [<c:forEach var="item" items="${listReceipt}">${item.value},</c:forEach>]
+                       }
+                  ]
+
+             };
+             new Chart(document.getElementById("viewchart1").getContext("2d")).Line(lineChartData);
+       </script>
+	</div>
+</body>
+
+</html>

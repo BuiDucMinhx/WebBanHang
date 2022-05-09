@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/auth/layout::dynamic(~{::body})}">
+<head>
+
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+</head>
+<body ng-app="app" ng-controller="ctrl">
+	<!-- partial -->
+	<div class="row col-lg-12">
+		<div class="col-lg-12 grid-margin stretch-card">
+			<!-- Form  -->
+			<div class="container register">
+				<div class="row">
+					<div class="col-md-3 register-left">
+						<img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+						<h3>Xin chào bạn</h3>
+					</div>
+					<div class="col-md-9 register-right">
+						<ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								id="home-tab" data-toggle="tab" href="#home" role="tab"
+								aria-controls="home" aria-selected="true">Form</a></li>
+							<li class="nav-item"><a class="nav-link" id="profile-tab"
+								data-toggle="tab" href="#profile" role="tab"
+								aria-controls="profile" aria-selected="false">List</a></li>
+						</ul>
+						
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade show active" id="home" role="tabpanel"
+								aria-labelledby="home-tab">
+								<h3 class="register-heading">Form quản lí sản phẩm</h3>
+								<div class="row register-form">
+									<div class="col-md-12">
+										<div class="form-group">
+											<img alt="" src="/imgs/{{form.image}}" ng-model="form.image"
+												style="width: 150px; height: 150px">
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control" ng-model="form.id"
+												placeholder="Id sản phẩm" value="" />
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control" ng-model="form.name"
+												placeholder="Tên sản phẩm" value="" />
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control" ng-model="form.price"
+												placeholder="Giá sản phẩm" value="" />
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control"
+												ng-model="form.manufacture" placeholder="Thương hiệu"
+												value="" />
+										</div>
+										<div class="form-group">
+											<form action="/upload/send" method="POST"
+												enctype="multipart/form-data" class="form mb-4 ">
+												<input name="attach" type="file"
+													class="border  border-5 form-control"><br>
+												<button class="btn btn-primary" ng-click="update()">
+													Lưu ảnh</button>
+											</form>
+										</div>
+									</div>
+								</div>
+								<div class="mx-auto">
+									<button class="snip1582" ng-click="create()">Mới</button>
+									<button class="snip1582" ng-click="update()">Cập nhật</button>
+									<button class="snip1582" ng-click="delete(form.email)">
+										Xóa</button>
+									<button class="snip1582" ng-click="reset()">Reset</button>
+								</div>
+							</div>
+							<div class="tab-pane fade show" id="profile" role="tabpanel"
+								aria-labelledby="profile-tab">
+								<h3 class="register-heading">Apply as a Hirer</h3>
+								<!-- Form  -->
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Danh sách sản phẩm</h4>
+
+											<div class="table-responsive">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Id</th>
+															<th>Tên</th>
+															<th>Hình</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="pro in items">
+															<td>{{pro.id}}</td>
+															<td>{{pro.name}}</td>
+															<td class="text-danger"><img class=" "
+																src="/imgs/{{pro.image}}" alt=""> <i
+																class="ti-arrow-up"></i></td>
+
+															<td>
+																<button ng-click="edit(pro.id)" class="snip1457">edit</button>
+																<button ng-click="delete(pro.id)" class="snip1457">delete</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Form  -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<!-- content-wrapper ends -->
+		<!-- partial:../../partials/_footer.html -->
+		<footer class="footer">
+			<div
+				class="d-sm-flex justify-content-center justify-content-sm-between">
+				<span
+					class="text-muted text-center text-sm-left d-block d-sm-inline-block">Bản
+					quyền © 2022. Bản Cao cấp <a href="https://www.bootstrapdash.com/"
+					target="_blank">MXgear company</a> Đã đăng ký Bản quyền.
+				</span> <span
+					class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sản
+					phẩm làm thủ công & được tạo bởi Mr.Minh<i
+					class="ti-heart text-danger ml-1"></i>
+				</span>
+			</div>
+		</footer>
+		<!-- partial -->
+	</div>
+	<!-- main-panel ends -->
+	</div>
+	<!-- page-body-wrapper ends -->
+	</div>
+	<script>
+let host = "http://localhost:8080/rest";
+const app = angular.module("app",[]);
+
+app.controller("ctrl", function($scope, $http){
+    $scope.form={}
+    $scope.items= []
+    $scope.form.image = '2425075.jpg';
+    $scope.reset = function(){
+    	$scope.form.id = null;
+        $scope.form.name = null;
+        $scope.form.price = null;
+        $scope.form.image = null;
+        $scope.form.manufacture = null;
+    }
+    $scope.load_all = function(){
+    	
+        var url = `${host}/products`;
+        $http.get(url).then(resp => {
+            $scope.items = resp.data;
+            console.log("Success", resp)
+        }).catch(error => {
+            console.log("Error",error)
+        })
+    }
+    $scope.edit = function(id){
+        var url = `${host}/products/${id}`;
+        $http.get(url).then(resp => {
+            $scope.form = resp.data;
+            console.log("Success", resp)
+        }).catch(error => {
+            console.log("Error",error)
+        })
+    }
+    $scope.create = function(){
+        var item = angular.copy($scope.form);
+        var url = `${host}/products`;
+        $http.post(url, item).then(resp => {
+            $scope.items.push(item);
+            $scope.reset();
+            console.log("Success", resp)
+        }).catch(error => {
+            console.log("Error",error)
+        })
+    }
+    $scope.update = function(){
+        var item = angular.copy($scope.form);
+        var url = `${host}/products/${$scope.form.id}`
+        $http.put(url, item).then(resp => {
+            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+            $scope.items[index] = resp.data;
+            console.log("Success", resp)
+        }).catch(error => {
+            console.log("Error",error)
+        })
+    }
+    $scope.delete = function(key){
+        var url = `${host}/products/${$scope.form.id}`;
+        $http.delete(url).then(resp => {
+            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+            $scope.items.splice(index,1);
+            $scope.reset();
+            console.log("Success", resp)
+        }).catch(error => {
+            console.log("Error",error)
+        })
+    }
+    $scope.load_all();
+
+})
+    $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            var controllerElement = document.querySelector('[ng-controller="ctrl"]');
+            var scope = angular.element(controllerElement).scope();
+            scope.$apply(function () {
+                scope.form.image = fileName;
+            });
+        });
+       
+    });
+    /* Demo purposes only */
+	$(".hover").mouseleave(
+	  function() {
+	    $(this).removeClass("hover");
+	  }
+	);
+</script>
+
+</body>

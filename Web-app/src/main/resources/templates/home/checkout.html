@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/site/layout::dynamic(~{::body})}">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+</head>
+<body style="background-image: url(../images/bg.jpg);">
+	<div class="container">
+		<div class="row cart-head">
+			<div class="container">
+				<div class="row">
+					<p></p>
+				</div> <br>
+				<div class="row">
+					<div style="display: table; margin: auto;">
+						<span class="step step_complete"> <a href="#"
+							class="check-bc">Cart</a> <span class="step_line step_complete"> </span>
+							<span class="step_line backline"> </span>
+						</span> <span class="step step_complete"> <a href="#"
+							class="check-bc">Checkout</a> <span class="step_line "> </span> <span
+							class="step_line step_complete"> </span>
+						</span> <span class="step_thankyou check-bc step_complete">Thank
+							you</span>
+					</div>
+				</div> <br>
+				<div class="row">
+					<p></p>
+				</div>
+			</div>
+		</div>
+		<div class="row cart-body">
+		
+			<form class="form-horizontal" method="post" th:action="@{/checkout}" th:object="${addressForm}">
+				<div
+					class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+					<!--REVIEW ORDER-->
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							Chi tiết sản phẩm
+							<div class="pull-right">
+								<small><a class="afix-1" href="#">Hiển thị</a></small>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div th:each="item : ${cart.itema}">
+								<div class="form-group">
+									<div class="col-sm-3 col-xs-3">
+										<img class="img-responsive" th:src="@{/imgs/__${item.image}__}" />
+									</div>
+									<div class="col-sm-6 col-xs-6">
+										<div class="col-xs-12" th:text=${item.name}>Tên sản phẩm</div>
+										<div class="col-xs-12">
+											<small>Số lượng:<span th:text=${item.qty}>1</span></small>
+										</div>
+									</div>
+									<div class="col-sm-3 col-xs-3 text-right">
+										<h6>
+											<span>$</span><span th:text=${item.price}></span>
+										</h6>
+									</div>
+								</div>
+								<div class="form-group">
+									<hr />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<hr />
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12">
+									<strong>Tạm tính:</strong>
+									<div class="pull-right">
+										$ <span th:text="${total}"></span>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<small>Phí ship:</small>
+									<div class="pull-right">
+										<span>$100</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<hr />
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12">
+									<strong>Tổng giá trị đơn hàng:</strong>
+									<div class="pull-right">
+										$ <span th:text="${total+100}"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">Check Out</button>
+					<!--REVIEW ORDER END-->
+				</div>
+			
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+					<!--SHIPPING METHOD ADDRESS-->
+					<div class="panel panel-info">
+						<div class="panel-heading">Địa chỉ người dùng</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="col-md-12">
+									<h4>Địa chỉ shipping</h4>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-md-12">
+									<strong>Quốc Gia:</strong>
+								</div>
+								<div class="col-md-12">
+									<input type="text" class="form-control" name="country" th:field="*{country}"/>
+									<i th:errors="*{country}" class="text-danger"></i>
+									
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6 col-xs-12">
+									<strong>Họ:</strong> <input type="text"
+										name="firstname" class="form-control" th:field="*{firstname}"/>
+										<i th:errors="*{firstname}" class="text-danger"></i>
+								</div>
+								
+								<div class="span1"></div>
+								<div class="col-md-6 col-xs-12">
+									<strong>Tên:</strong> <input type="text" name="lastname"
+										class="form-control"  th:field="*{lastname}"/>
+										<i th:errors="*{lastname}" class="text-danger"></i>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<strong>Địa chỉ:</strong>
+								</div>
+								<div class="col-md-12">
+									<input type="text" name="address" class="form-control" th:field="*{address}"/>
+									<i th:errors="*{address}" class="text-danger"></i>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<strong>Số điện thoại:</strong>
+								</div>
+								<div class="col-md-12">
+									<input type="text" name="phone" class="form-control"
+										 th:field="*{phone}"/>
+										 <i th:errors="*{phone}" class="text-danger"> </i>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<strong>Địa chỉ email:</strong>
+								</div>
+								<div class="col-md-12">
+									<input type="text" name="email" class="form-control"
+										 th:field="*{email}"/>
+										 <i th:errors="*{email}" class="text-danger"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--SHIPPING METHOD ADDRESS END-->
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row cart-footer"></div>
+</body>
+</html>

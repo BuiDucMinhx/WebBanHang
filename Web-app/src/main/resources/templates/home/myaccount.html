@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/site/layout::dynamic(~{::body})}">
+<head>
+
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+	
+</head>
+<body >
+
+	<div class="container">
+        <hr>
+        <p class="font-weight-bold">MY ACCOUNT</p>
+        <div class="row">
+            
+            <div class="col-md-3 mb-4 ">
+                <ul class="nav md-pills pills-secondary d-flex flex-column myaccount-tab-menu " id="myTabs">
+                    <li class="nav-item"><a href="#tab1" data-url="/tab1" class="nav-link active"><i class="fa fa-info" aria-hidden="true" style="font-size: 15px"></i>Chi Tiết Đơn Hàng</a></li>
+                    
+                    <li class="nav-item"><a href="#tab2" data-url="/tab2" class="nav-link " ><i class="fa fa-user" aria-hidden="true"></i>Tài Khoản của tôi</a></li>
+                   
+                    <li class="nav-item"><a href="#tab3" data-url="/tab3" class="nav-link"><i class="fa fa-address-card-o" aria-hidden="true"></i> Địa chỉ</a></li>
+
+                    <li > <a  href="/auth/logoff" ><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            
+           
+			<div class="tab-content pt-3 ">
+	            <div class="tab-pane active" id="tab1">Active panel</div>
+	            <div class="tab-pane " id="tab2"></div>
+	            <div class="tab-pane" id="tab3"></div>
+	        </div>
+            
+			<div class="container">
+</div>
+
+
+
+
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script>
+    
+
+    
+</script>
+<script>
+    $('#myTabs a').click(function (e) {
+
+
+        var url = $(this).attr("data-url");
+        var href = this.hash;
+        var pane = $(this);
+
+        // ajax load from data-url
+        $(href).load(url, function (result) {
+            pane.tab('show');
+        });
+    });
+
+    // load first tab content
+    $('#tab1').load($('.nav-link.active').attr("data-url"), function (result) {
+    });
+    
+    
+</script>
+        </div>
+       </div>
+</body>
+</html>
