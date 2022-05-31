@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'Minhapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_15B5902DBAB04B4AA53656EA753FE9DA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4551BBE797254AFE9006F9CDB7CA325D }}
           package: '*.jar'
