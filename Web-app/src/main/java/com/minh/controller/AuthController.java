@@ -120,7 +120,7 @@ public class AuthController {
 		account.setPassword(pe.encode(myaccount.getNewpassword()) );
 		Authority authority = new Authority();
 		authority.setAccount(account);
-		authority.setRole(new Role("GUEST","Guests"));
+		authority.setRole(new Role("USER","Users"));
 		accountdao.save(account);
 		authoritydao.save(authority);
 		model.addAttribute("message","Đăng kí thành công");

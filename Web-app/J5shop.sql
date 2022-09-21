@@ -110,8 +110,7 @@ INSERT Categories VALUES (3, N'Máy tính'),
 						 (5, N'Phụ kiện & Kháca')
 go
 INSERT Details VALUES (CAST(N'2022-04-07' AS Date), 0, 200, N'569120', N'user3'),
-					  (CAST(N'2022-04-20' AS Date), 1, 0, N'682731', N'USER2'),
-					  (CAST(N'2022-04-20' AS Date), 1, 400, N'321384', N'USER2')
+					  (CAST(N'2022-04-20' AS Date), 1, 0, N'682731', N'USER2'))
 go
 INSERT Products VALUES (0, N'i3 - Gen 10th', N'p1.PNG', 200, CAST(N'9999-12-31' AS Date), 0, 3, 98, N'Việt Nam', N'Itel', N'Intel Core i3 Gen 10 là một bộ xử lý độc quyền của Intel được xây dựng trên khuôn khổ của kiến ​​trúc đa xử lý. Nó là một loại vi xử lý lõi kép với một đơn vị xử lý đồ họa tích hợp (GPU).', N'91% người dùng thích sản phẩm này !'),
 					   (1, N'Chuột Razor Gaming', N'p2.PNG', 150, CAST(N'2001-12-31' AS Date), 0, 5, 79, N'Việt Nam', N'MSI', N'Razer DeathAdder Essential thiết kế đơn giản với kiểu dáng truyền thống, tạo điểm nhấn nhờ logo Razer nổi bật phong cách gaming, hình thái vừa vặn tay đảm bảo không gây mỏi cổ tay cả khi sử dụng lâu.', N'80% người dùng thích sản phẩm này !'),

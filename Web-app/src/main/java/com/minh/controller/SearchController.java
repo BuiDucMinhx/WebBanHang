@@ -50,7 +50,6 @@ public class SearchController {
 	
 	@GetMapping("/list{id}")
 	public String index(@PathVariable("id") int id, Model model, @RequestParam("p") Optional<Integer> p) {
-		System.out.println(id);
 		sessionService.set("id",id);
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
 		Page<Product> list = productDao.ListTheoLoai2(id, pageable);

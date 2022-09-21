@@ -26,7 +26,7 @@
     <div class="px-4 px-lg-0">
         <!-- For demo purpose -->
         <div class="container text-white py-5 text-center">
-            <h1 class="display-4">Shopping cart</h1>
+            <h1 class="display-4">Giỏ hàng của bạn</h1>
             
         </div>
         <!-- End -->
@@ -41,22 +41,22 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="p-2 px-3 text-uppercase">Id</div>
+                                            <div class="p-2 px-3 text-uppercase">Id sản phẩm</div>
                                         </th>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="p-2 px-3 text-uppercase">Name</div>
+                                            <div class="p-2 px-3 text-uppercase">Tên sản phẩm</div>
                                         </th>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="py-2 text-uppercase">Price</div>
+                                            <div class="py-2 text-uppercase">Giá</div>
                                         </th>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="py-2 text-uppercase">Quantity</div>
+                                            <div class="py-2 text-uppercase">Số lượng</div>
                                         </th>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="py-2 text-uppercase">Amount</div>
+                                            <div class="py-2 text-uppercase">Tổng</div>
                                         </th>
                                         <th scope="col" class="border-0 bg-light">
-                                            <div class="py-2 text-uppercase">Remove</div>
+                                            <div class="py-2 text-uppercase">Thao tác</div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -70,7 +70,7 @@
 											<td><input type="number" name="qty" th:value="${item.qty}"
 												onblur="this.form.submit()" style="width: 50px;" min="0"></td>
 											<td>$ <span th:text="${item.price * item.qty}" ></span></td>
-											<td><a th:href="@{/cart/remove/__${item.id}__}">Remove</a></td>
+											<td><a th:href="@{/cart/remove/__${item.id}__}">Xóa</a></td>
 										</tr>
 									</form>
 										<tr>
@@ -82,7 +82,7 @@
 											<td></td>
 										</tr>
                             </table>
-                             <a href="/cart/clear" style="right: 10%; position: absolute;">CLEAR <i class="fa fa-eraser" aria-hidden="true"></i></a>
+                             <a href="/cart/clear" style="right: 10%; position: absolute;">Xóa tất cả <i class="fa fa-eraser" aria-hidden="true"></i></a>
                             <button type="button" onclick="location.href='/shop'" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</button>
                         </div>
                         <!-- End -->
@@ -92,34 +92,34 @@
 
                 <div class="row py-5 p-4 bg-white rounded shadow-sm">
                     <div class="col-lg-6">
-                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Coupon code</div>
+                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mã giảm giá</div>
                         <div class="p-4">
-                            <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
+                            <p class="font-italic mb-4">Nếu bạn có mã giảm giá, Hãy nhập vào hộp phía dưới</p>
                             <div class="input-group mb-4 border rounded-pill p-2">
-                                <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3"
+                                <input type="text" placeholder="Áp mã coupon" aria-describedby="button-addon3"
                                     class="form-control border-0">
                                 <div class="input-group-append border-0">
                                     <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i
-                                            class="fa fa-gift mr-2"></i>Apply coupon</button>
+                                            class="fa fa-gift mr-2"></i>Áp dụng mã giảm giá</button>
                                 </div>
                             </div>
                         </div>
                         
                     </div>
                     <div class="col-lg-6">
-                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary
+                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Tổng đơn hàng
                         </div>
                         <div class="p-4">
                             <ul class="list-unstyled mb-4">
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong
-                                        class="text-muted">Order Subtotal </strong><strong class="text-success">$ <span class="text-success" th:text="${total}" ></span></strong></li>
+                                        class="text-muted">Tạm tính </strong><strong class="text-success">$ <span class="text-success" th:text="${total}" ></span></strong></li>
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong
-                                        class="text-muted">Shipping</strong><strong>$100.0</strong></li>
+                                        class="text-muted">Phí ship</strong><strong>$100.0</strong></li>
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong
-                                        class="text-muted">Total</strong>
+                                        class="text-muted">Tổng tiền</strong>
                                     <h3 class="font-weight-bold">$ <span class="text-danger" th:text="${total + 100}" ></span></h3>
                                 </li>
-                            </ul><a th:href="@{/checkout}" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                            </ul><a th:href="@{/checkout}" class="btn btn-dark rounded-pill py-2 btn-block">Đặt hàng</a>
                         </div>
                     </div>
                 </div>

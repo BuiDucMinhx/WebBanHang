@@ -44,8 +44,8 @@ public class Address implements Serializable{
 	private String email;
 	
 
-	@ManyToOne
-	@JoinColumn(name = "username")
+	@ManyToOne()
+	@JoinColumn(name = "Username")
 	Account account;
 	
 	public Address(String country, String firstname, String lastname,String address, String phone, 

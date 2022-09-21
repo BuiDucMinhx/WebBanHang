@@ -1,5 +1,6 @@
 package com.minh.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.minh.dao.ProductDAO;
 
 import com.minh.entity.Product;
+import com.minh.model.ProductModel;
 
 
 
@@ -128,4 +130,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		Page<Product> pageresult = productdao.findallhigh(pageable);
 		return pageresult.toList();
 	}
+	
+
 }

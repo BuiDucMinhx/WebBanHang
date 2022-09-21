@@ -1,5 +1,6 @@
 package com.minh.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -31,7 +32,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer>{
 	
 	
 	@Query(value="SELECT * FROM Products WHERE categoryid = ?1 ", nativeQuery = true)
-	List<Product> ListTheoLoai1(int number1);
+	ArrayList<Product> ListTheoLoai1(int number1);
 	
 	@Query(value = "SELECT * FROM Products WHERE name like ?1", nativeQuery = true)
 	Page<Product> fillByKeywords2(String keywords, Pageable pageable);

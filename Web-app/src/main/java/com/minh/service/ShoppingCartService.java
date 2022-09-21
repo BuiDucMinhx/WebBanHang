@@ -2,7 +2,7 @@ package com.minh.service;
 
 import java.util.Collection;
 import java.util.List;
-
+import com.minh.model.ProductModel;
 import com.minh.entity.Product;
 
 public interface ShoppingCartService {
@@ -45,4 +45,5 @@ public interface ShoppingCartService {
 	// Chuyển list sang page high
 	List<Product> pagehigh(int no, int size);
 	
+
 }
