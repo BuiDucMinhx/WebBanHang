@@ -137,7 +137,8 @@
     </div> <!-- End slider area -->
     
     <!-- Search vs Category-->
-	    <div class="row  vip" style="height: 80px">
+    <div class="row  vip" style="height: 80px">
+    
 	    <!-- Search -->
 	    <div class="col-sm-9" style="margin-top: 15px">
 		<form style="margin-left: 25px " th:action="@{/search}" method="post">
@@ -150,7 +151,7 @@
 	    
 	    <!-- Danh mục -->
 	    <div class=" collapse navbar-collapse js-navbar-collapse" >
-	        <ul class="nav navbar-nav " style="margin-left: 90px; margin-top: 15px">
+	        <ul class="nav navbar-nav cate" >
 	        <li class="dropdown bg-success " style="color :white ; font-size: large;">
 	          <a href="#" class="dropdown-toggle " style="color :black; width: 260px " data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-list"></i>  <span th:text="#{nav.category}"></span ><span class="caret"></span></a>
 	          <ul class="dropdown-menu w-150" role="menu" style="width: 260px">  
@@ -162,10 +163,11 @@
 	        </li>
 	       </ul>
 		</div>
-		</div>
-    </div>
-    <!-- Danh mục -->
+    	<!-- Danh mục -->
+    	
+   	</div>
     <!-- Search vs Category-->
+    
     </nav>
     <!-- End Nav -->
 </body>

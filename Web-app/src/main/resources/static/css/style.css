@@ -278,7 +278,9 @@ z-index: 9;
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;overflow: hidden;border: 1px solid #ddd;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #ddd;
 }
 .product-hover:after {
   background: none repeat scroll 0 0 #000;
@@ -288,7 +290,8 @@ z-index: 9;
   opacity: 0.6;
   position: absolute;
   top: 0;
-  width: 100%;transition: .4s;
+  width: 100%;
+  transition: .4s;
 }
 .product-hover a {
     background: none repeat scroll 0 0 #1abc9c;
@@ -307,7 +310,8 @@ z-index: 9;
 }
 .product-hover a:hover {
   background: #000;
-  text-decoration: none;border-color: #444;
+  text-decoration: none;
+  border-color: #444;
 }
 .product-carousel-price ins {
   color: #1abc9c;
@@ -343,6 +347,11 @@ z-index: 9;
 .single-product:hover .product-hover a.add-to-cart-link {top: 32%;}
 .single-product:hover .product-hover a.view-details-link {bottom: 32%;}
 .single-product:hover .product-hover:after{left: 0}
+
+.product-hover a.add-to-cart-link-index {top: -25%;}
+.product-hover a.view-details-link-index { bottom: -25%;}
+.single-product:hover .product-hover a.add-to-cart-link-index {top: 20%;}
+.single-product:hover .product-hover a.view-details-link-index {bottom: 20%;}
 
 
 .product-carousel {
@@ -1009,3 +1018,4 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .pagination > li > a, .pagination > li > span {
   color: #1abc9c;
 }
+

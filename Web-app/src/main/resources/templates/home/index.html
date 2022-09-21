@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{/site/layout::dynamic(~{::body})}"
-	
-
 	>
 <head>
 
@@ -13,7 +11,6 @@
 <body>
 	<h1 th:text="${message}"></h1>
 	
-
 	<!-- Starting Home -->
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
@@ -22,30 +19,30 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo">
                         <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
+                        <p>30 ngày hoàn trả</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo">
                         <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
+                        <p>Miễn phí ship</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo">
                         <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
+                        <p>Bảo mật thanh toán</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo">
                         <i class="fa fa-gift"></i>
-                        <p>New products</p>
+                        <p>Sản phẩm mới</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- End promo area -->
+    </div> 
     
     <!-- Top 10 product -->
     <div class="maincontent-area">
@@ -56,25 +53,21 @@
                     <div class="latest-product"> <br>
                         <h2 class="section-title" th:text="#{home.content}">Top 10 sản phẩm bán chạy nhất</h2>
                         <div class="product-carousel">
-                        
-                        <div th:each="item : ${item10}">
-                        	<div class="single-product">
-                                <div class="product-f-image">
-                                    <img class=" " th:src="@{/imgs/__${item.image}__}" alt="">
-                                    <div class="product-hover">
-                                        <a th:href="@{/cart/add/__${item.id}__}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                        <a th:href="@{/product__${item.id}__}" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.html"><span th:text="${item.name}"></span></a></h2>
-                                
-                                <div class="product-carousel-price">
-                                    $<ins th:text="${item.price}"></ins> <del>$800</del>
-                                </div> 
-                            </div>
-                        </div>
-                        
+	                        <div th:each="item : ${item10}">
+	                        	<div class="single-product">
+	                                <div class="product-f-image">
+	                                    <img class=" " th:src="@{/imgs/__${item.image}__}" alt="">
+	                                    <div class="product-hover">
+	                                        <a th:href="@{/cart/add/__${item.id}__}" class="add-to-cart-link-index"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
+	                                        <a th:href="@{/product__${item.id}__}" class="view-details-link-index"><i class="fa fa-link"></i> Xem chi tiết </a>
+	                                    </div>
+	                                </div>
+	                                <h2><a href="single-product.html"><span th:text="${item.name}"></span></a></h2>
+	                                <div class="product-carousel-price">
+	                                    $<ins th:text="${item.price}"></ins> <del>$800</del>
+	                                </div> 
+	                            </div>
+	                        </div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +82,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="brand-wrapper"> <br>
-                        <h2 class="section-title">Brands</h2>
+                        <h2 class="section-title">Thương hiệu</h2>
                         <div class="brand-list">
                             <img src="images/services_logo__1.jpg" alt="">
                             <img src="images/services_logo__2.jpg" alt="">

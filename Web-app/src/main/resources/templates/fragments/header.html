@@ -18,9 +18,8 @@
                             <li><a href="/cart"><i class="fa fa-user"></i> <span th:text="#{nav.cart}"></span ></a></li>
                             <li><a href="/login"><i class="fa fa-user"></i> <span th:text="#{nav.login}"></span ></a></li>
                             <li><a href="/auth/logoff"><i class="fa fa-user"></i> <span th:text="#{nav.logout}"></span ></a></li>
-                            
                             <li>
-                            	<!-- Info User -->
+                            	<!-- Thông tin người dùng -->
 				                <main>
 									<h3 th:unless = "${#request.remoteUser}">
 										<i style="color: red">Chưa đăng nhập</i>
@@ -31,17 +30,14 @@
 										</ul>
 									</th:block>	
 								</main>
-						  		<!-- Info User -->
+						  		<!-- Thông tin người dùng -->
 						  </li>
                         </ul>
                     </div>
-                    
                 </div>
-                
                 <div class="col-md-3 bg-danger">
                     <div class="header-right" style="right:-150px; position:absolute;">
                         <ul class="list-unstyled list-inline">
-                            
                             <li class="dropdown dropdown-small">
                                 <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value"> </span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -51,11 +47,10 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                
+                </div>            
             </div>
-            
         </div>
-    </div> <!-- End header area -->
+    </div> 
+    <!-- End header area -->
 </body>
 </html>

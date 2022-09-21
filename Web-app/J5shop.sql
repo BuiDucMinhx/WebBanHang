@@ -1,9 +1,9 @@
-DROP DATABASE IF EXISTS J6Shop ;
+DROP DATABASE IF EXISTS J5Shop ;
 go
-create database J6Shop;
+create database J5Shop;
 go
 -- Create table
-USE J6Shop
+USE J5Shop
 go
 CREATE TABLE Accounts(
 	username varchar(50) NOT NULL primary Key,

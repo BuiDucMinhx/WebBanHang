@@ -3271,3 +3271,10 @@ textarea::-webkit-input-placeholder {
     margin-bottom: -15%;
     color: #495057;
 }
+
+.cate{
+	float: right; 
+	margin-top: 15px;
+	margin-right: 25px; 
+	
+}

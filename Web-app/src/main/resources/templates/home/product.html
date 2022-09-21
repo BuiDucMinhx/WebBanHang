@@ -41,17 +41,17 @@
 										
 										<div class="preview-pic tab-content">
 										  <div class="tab-pane active" id="pic-1"><img th:src="@{/imgs/__${loadInfo.image}__}" /></div>
-										  <div class="tab-pane" id="pic-2"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></div>
-										  <div class="tab-pane" id="pic-3"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></div>
-										  <div class="tab-pane" id="pic-4"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></div>
-										  <div class="tab-pane" id="pic-5"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></div>
+										  <div class="tab-pane" id="pic-2"><img th:src="@{/imgs/__${loadInfo.image}__}" /></div>
+										  <div class="tab-pane" id="pic-3"><img th:src="@{/imgs/__${loadInfo.image}__}" /></div>
+										  <div class="tab-pane" id="pic-4"><img th:src="@{/imgs/__${loadInfo.image}__}" /></div>
+										  <div class="tab-pane" id="pic-5"><img th:src="@{/imgs/__${loadInfo.image}__}" /></div>
 										</div>
 										<ul class="preview-thumbnail nav nav-tabs">
 										  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img th:src="@{/imgs/__${loadInfo.image}__}" /></a></li>
-										  <li><a data-target="#pic-2" data-toggle="tab"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></a></li>
-										  <li><a data-target="#pic-3" data-toggle="tab"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></a></li>
-										  <li><a data-target="#pic-4" data-toggle="tab"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></a></li>
-										  <li><a data-target="#pic-5" data-toggle="tab"><img src="https://i.pinimg.com/564x/8d/8f/ca/8d8fca06171c28faa996cd1976e04426.jpg" /></a></li>
+										  <li><a data-target="#pic-2" data-toggle="tab"><img th:src="@{/imgs/__${loadInfo.image}__}"  /></a></li>
+										  <li><a data-target="#pic-3" data-toggle="tab"><img th:src="@{/imgs/__${loadInfo.image}__}"  /></a></li>
+										  <li><a data-target="#pic-4" data-toggle="tab"><img th:src="@{/imgs/__${loadInfo.image}__}"  /></a></li>
+										  <li><a data-target="#pic-5" data-toggle="tab"><img th:src="@{/imgs/__${loadInfo.image}__}"  /></a></li>
 										</ul>
 										
 									</div>
@@ -73,30 +73,24 @@
 										<p> <span  th:text = "${loadInfo.review}"></span>  <strong>(87 votes)</strong>	</p>
 										<h5 class="sizes">Xuất xứ:
 											<span class="text-info" th:text = "${loadInfo.origin}">s</span>
-											
 										</h5>
 										<h5 class="colors">Thương hiệu:
-											
 											<span class="text-info" th:text = "${loadInfo.manufacture}"></span>
-											
 										</h5>
 										
 										<div role="tabpanel">
 				                            <ul class="product-tab" role="tablist">
-				                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
-				                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+				                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Chi tiết</a></li>
+				                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Đánh giá</a></li>
 				                            </ul>
 				                            
 				                            <div class="tab-content">
 				                                <div role="tabpanel" class="tab-pane fade in active" id="home">
 				                                    <h2>Thông tin sản phẩm</h2>  
-				                                    
 				                                </div>
 				                                <div role="tabpanel" class="tab-pane fade" id="profile">
-				                                    <h2 >Đánh giá: </h2>
-				                                    
+				                                    <h2 >Đánh giá của người dùng: </h2>
 				                                    <div class="submit-review">
-				                                        
 				                                        <div class="rating-chooser">
 				                                            <p>Tỉ lệ</p>
 				                                            <div class="rating-wrap-post">
@@ -106,15 +100,14 @@
 				                                                <i class="fa fa-star"></i>
 				                                                <i class="fa fa-star"></i>
 				                                            </div>
-				                                        </div>
-				                                        
+				                                        </div>			                                        
 				                                    </div>
 				                                </div>
 				                            </div>
 				                        </div>
 										
 										<div class="action">
-											<a th:href="@{/cart/add/__${loadInfo.id}__}" class="add-to-cart btn btn-default" type="button">add to cart</a>
+											<a th:href="@{/cart/add/__${loadInfo.id}__}" class="add-to-cart btn btn-default" type="button">Thêm vào giỏ hàng</a>
 											<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
 										</div>
 									</div>
@@ -122,21 +115,16 @@
 							</div>
 						</div>
 					</div>
-                        
-                        
-                        
-                        
-                        
                         <div class="related-products-wrapper">
-                            <h2 class="related-products-title">Related Products</h2>
+                            <h2 class="related-products-title">Sản phẩm liên quan</h2>
                             <div class="related-products-carousel">
                             	<div th:each="item : ${items}">
                                 <div class="single-product">
                                     <div class="product-f-image">
                                         <img th:src="@{/imgs/__${item.image}__}" alt="">
                                         <div class="product-hover">
-                                            <a th:href="@{/cart/add/__${item.id}__}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                        <a th:href="@{/product__${item.id}__}" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                                            <a th:href="@{/cart/add/__${item.id}__}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
+                                        <a th:href="@{/product__${item.id}__}" class="view-details-link"><i class="fa fa-link"></i> Xem Chi Tiết</a>
                                         </div>
                                     </div>
 

@@ -68,7 +68,7 @@
 											<td th:text="${item.name}"></td>
 											<td>$ <span th:text="${item.price}"></span></td>
 											<td><input type="number" name="qty" th:value="${item.qty}"
-												onblur="this.form.submit()" style="width: 50px;"></td>
+												onblur="this.form.submit()" style="width: 50px;" min="0"></td>
 											<td>$ <span th:text="${item.price * item.qty}" ></span></td>
 											<td><a th:href="@{/cart/remove/__${item.id}__}">Remove</a></td>
 										</tr>
