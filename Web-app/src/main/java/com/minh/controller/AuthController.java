@@ -28,14 +28,18 @@ import com.minh.service.UserService;
 // Đăng kí và đăng nhập
 @Controller
 public class AuthController {
-	@Autowired AccountDAO  accountDao;
+	@Autowired BCryptPasswordEncoder pe;
 	@Autowired SessionService sessionService;
 	@Autowired UserService userService;
-	@Autowired BCryptPasswordEncoder pe;
-	@Autowired AccountDAO accountdao;
+	@Autowired MailerService mailer;
+	@Autowired SessionService sessionservice;
     @Autowired UserService validationService;
+	
+	@Autowired AccountDAO  accountDao;
+	@Autowired AccountDAO accountdao;
     @Autowired AuthorityDAO authoritydao;
-    
+	
+
 	// Đăng nhập_________________________________________________
 	@RequestMapping("/login")
 	public String login(Model model) {
@@ -78,9 +82,6 @@ public class AuthController {
 	public String register(Model model) {
 		return "auth/register";
 	}
-	
-	@Autowired	MailerService mailer;
-	@Autowired SessionService sessionservice;
 	
 	@PostMapping("/register")
 	public String postregister(Model model,@ModelAttribute("register") Myaccount entity, BindingResult result ) throws MessagingException {

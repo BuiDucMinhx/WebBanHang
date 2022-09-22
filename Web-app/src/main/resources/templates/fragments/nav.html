@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 
 </head>
-<body>
+<body >
 	<!-- Starting Nav -->
 	<nav th:fragment="nav">
     <div class="site-branding-area" >
@@ -40,16 +40,14 @@
                     <ul class="nav navbar-nav">
                         <li><a href = "/index" th:text="#{nav.home}">Trang chủ</a></li>
                         <li><a href = "/about" th:text="#{nav.about}">Giới thiệu</a></li>
-                        <li><a href = "/shop" th:text="#{nav.shop}">Mua sắm</a></li>
+                        <li><a href = "/shop" th:text="#{nav.shop}" ng-click="ShowHide()">Mua sắm</a></li>
                      	<li><a>||</a> </li>
 						<li><a href="/manager" th:text="#{nav.manager}"><span><i class="fa fa-audio-description"  aria-hidden="true"></i></span > Quản lí </a></li>
-					
                     </ul>
                 </div>  
             </div>
         </div>
     </div> <!-- End mainmenu area -->
-    
     <div class="slider-area">
         <div class="zigzag-bottom"></div>
         <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
@@ -78,9 +76,7 @@
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-6">
                                             <div class="slide-content">
-                                          
                                                 <h2 style="color : white ">We are awesome</h2>
-                                                
                                                 <p>Chúng tôi rất tuyệt vời, mang lại tất cả những gì bạn cần ...</p>
                                                 <a href="" class="readmore">Click Now</a>
                                             </div>
@@ -120,7 +116,7 @@
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-6">
                                             <div class="slide-content" >
-                                                <h2 style="color : white ">We are superb</h2>
+                                                <h2 style="color : white ">We are superx</h2>
                                                 <p style="color : white ">Chúng tôi rất đỉnh, chúng tôi sẽ đưa bạn bay thật xa</p>
                                                 <a href="" class="readmore">Click Now</a>
                                             </div>
@@ -140,17 +136,25 @@
     <div class="row  vip" style="height: 80px">
     
 	    <!-- Search -->
-	    <div class="col-sm-9" style="margin-top: 15px">
+	    <div class="col-sm-4" style="margin-top: 15px" ng-show = "!IsVisible">
 		<form style="margin-left: 25px " th:action="@{/search}" method="post">
 		  <input type="text" th:value="${keywords}" placeholder="Bạn muốn tìm sản phẩm?.." name="keywords">
 		  <button type="submit"><i class="fa fa-search"></i></button>
-		  
 		</form>
+		</div>
+    	<!-- Search -->
+    	
+    	<!-- Search -->
+	    <div class="col-sm-4" style="margin-top: 15px"  ng-show = "IsVisible">
+			<form style="margin-left: 25px ">
+			  <input type="text" placeholder="Bạn muốn tìm sản phẩm?.." ng-model="key">
+			  <button type="submit" ng-click=(search(0))><i class="fa fa-search"></i></button>
+			</form>
 		</div>
     	<!-- Search -->
 	    
 	    <!-- Danh mục -->
-	    <div class=" collapse navbar-collapse js-navbar-collapse" >
+	    <div class=" collapse navbar-collapse js-navbar-collapse">
 	        <ul class="nav navbar-nav cate" >
 	        <li class="dropdown bg-success " style="color :white ; font-size: large;">
 	          <a href="#" class="dropdown-toggle " style="color :black; width: 260px " data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-list"></i>  <span th:text="#{nav.category}"></span ><span class="caret"></span></a>

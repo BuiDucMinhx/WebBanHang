@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 	
 </head>
-<body>
+<body ng-app="MyApp" ng-controller="MyController">
 	<div class="body" >
 		<div class=" container py-5 mx-auto" >
 		  <div class="row  text-white mb-5 ">
@@ -26,14 +26,13 @@
 		              <h1 class="mt-0 font-weight-bold mb-2 " style="margin-top: 15px"><span th:text="${item.name}"></span> </h1>
 		              <p class="font-italic text-muted mb-0 small"><span th:text="${item.review}"></span> <a th:href="@{/cart/add/__${item.id}__}" class=" add-to-cart-link a" style="right:0px; position: absolute;"><i class="fa fa-shopping-cart" ></i> Add to cart</a>  </p>
 		              <div class="d-flex align-items-center justify-content-between mt-1">
-		                    <h6 class="font-weight-bold my-2"><span th:text="${item.price}"></span> USD</h6>
+	                    <h6 class="font-weight-bold my-2"><span th:text="${item.price}"></span> USD</h6>
 		                <ul class="list-inline small">
 		                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
 		                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
 		                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
 		                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
 		                  <li class="list-inline-item m-0"><i class="fa fa-star text-gray"></i> <a th:href="@{/product__${item.id}__}" class="view-details-link a" style="right:0px; position: absolute;"><i class="fa fa-link"></i> See details</a></li>	  
-						
 		                </ul>
 		              </div>
 		            </div> 
@@ -63,7 +62,12 @@
 		</nav>
 		</div>
 	</div>
-	
+    <script >
+        var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            $scope.IsVisible = false;
+        });
+    </script>
 	
 </body>
 </html>

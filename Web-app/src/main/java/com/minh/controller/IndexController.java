@@ -31,7 +31,7 @@ public class IndexController {
 	@Autowired HttpSession session;
 	
 	@GetMapping("/index")
-	public String home(Model model) {
+	public String index(Model model) {
 		session.setAttribute("count", 0);
 		return "/home/index";
 	}
@@ -48,7 +48,7 @@ public class IndexController {
 	
 	// Tạo ra list categories
 	@ModelAttribute("categories")
-	public List<Category> indexx(Model model) {
+	public List<Category> listCate(Model model) {
 		return cateDao.AllLoai();
 	}
 	
@@ -72,8 +72,6 @@ public class IndexController {
 		System.out.println(items);
 		return "home/shopage";
 	}
-	
-	
 	
 	@ModelAttribute("item10")
 	public List<Product> top10(Model model) {

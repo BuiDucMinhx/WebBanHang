@@ -30,12 +30,17 @@ import com.minh.entity.Product;
 import com.minh.service.SessionService;
 import com.minh.service.ShoppingCartService;
 
-// Tạo các restful Controller để dùng cho postman hoặc angularjs
+// Tạo các restful api để giao tiếp với front-end
 @CrossOrigin("*")
 @RestController
 public class RestfulAPIController {
-	@Autowired ProductDAO productdao;
 	@Autowired ShoppingCartService service;
+	@Autowired ProductDAO productdao;
+	@Autowired CategoryDAO Catedao;
+	@Autowired AccountDAO accountdao; 
+	@Autowired AuthorityDAO authoritydao; 
+	@Autowired SessionService sessionservice;
+	
 	
 	//Product
 	@GetMapping("/rest/products")
@@ -43,7 +48,6 @@ public class RestfulAPIController {
 		return productdao.findAll();
 	}
 	
-	@Autowired SessionService sessionservice;
 	@GetMapping("/rest/products0/{no}")
 	public List<Product>  getAll1z(Model model, @PathVariable int no) {
 		return service.page(no, 12);
@@ -68,8 +72,11 @@ public class RestfulAPIController {
 	public List<Product>  getAllhigh(Model model, @PathVariable int no) {
 		return service.pagehigh(no, 12);
 	}
-
 	
+	@GetMapping("/rest/search/{no}")
+	public List<Product>  search(Model model, @PathVariable int no, @RequestParam("keywords") String kw) {
+		return service.search(no, 12, kw);
+	}
 	
 	@GetMapping("/rest/products/{id}")
 	public Product  getOne1(Model model, @PathVariable("id") Integer id) {
@@ -90,11 +97,7 @@ public class RestfulAPIController {
 		productdao.deleteById(id);
 	}
 	
-
 	//Category
-	@Autowired
-	CategoryDAO Catedao;
-	
 	@GetMapping("/rest/categories")
 	public ResponseEntity<List<Category>>  getAll2(Model model) {
 		return ResponseEntity.ok(Catedao.findAll());
@@ -163,21 +166,15 @@ public class RestfulAPIController {
 		detaildao.deleteById(id);
 	}
 	
-	
-	@Autowired AccountDAO accountdao; 
-	@Autowired AuthorityDAO authoritydao; 
 	//Account guest and user
 	@GetMapping("/rest/accounts")
 	public List<Account>  getAll4(Model model) {
 		return accountdao.findAll();
 	}	
 	
-	
 	@GetMapping("/rest/accounts/{roleid}")
 	public List<Account>  getOnex(Model model, @PathVariable("roleid") String roleid) {
 		return accountdao.findbyroleid(roleid);
 	}	
-	
-	
-	
+		
 }

@@ -131,5 +131,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		return pageresult.toList();
 	}
 	
+	
+	@Override
+	public List<Product> search(int no, int size, String kword){
+		Pageable pageable = PageRequest.of(no, size);
+		Page<Product> pageresult = productdao.fillByKeywords2("%" + kword + "%", pageable);
+		return pageresult.toList();
+	}
 
 }

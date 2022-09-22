@@ -45,5 +45,7 @@ public interface ShoppingCartService {
 	// Chuyển list sang page high
 	List<Product> pagehigh(int no, int size);
 	
-
+	// List Search
+	List<Product> search(int no, int size, String kword);
+	
 }

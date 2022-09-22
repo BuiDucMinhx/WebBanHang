@@ -24,7 +24,7 @@ import com.minh.service.ShoppingCartService;
 
 // Các điều khiển liên quan đến đặt hàng và giỏ hàng
 @Controller
-public class ShoppingCartController implements CheckAddressAccountNull {
+public class ShoppingCartController {
 	@Autowired ShoppingCartService cart; 
 	@Autowired OtherService service;
 	@Autowired SessionService sessionService;
@@ -69,6 +69,7 @@ public class ShoppingCartController implements CheckAddressAccountNull {
 		return total;
 	}
 	
+	// Xóa
 	@RequestMapping("/cart/remove/{id}")
 	public String remove(@PathVariable("id") int id) {
 		cart.remove(id);
@@ -76,6 +77,7 @@ public class ShoppingCartController implements CheckAddressAccountNull {
 		return "redirect:/cart"; 
 	}
 	
+	// Update
 	@RequestMapping("/cart/update/{id}")
 	public String update(@PathVariable("id") int id, @RequestParam("qty") Integer qty) {
 		cart.update(id,qty);	
@@ -83,6 +85,7 @@ public class ShoppingCartController implements CheckAddressAccountNull {
 		return "redirect:/cart"; 
 	}
 	
+	// Clear
 	@RequestMapping("/cart/clear")
 	public String clear() {
 		session.setAttribute("count", cart.getCount());

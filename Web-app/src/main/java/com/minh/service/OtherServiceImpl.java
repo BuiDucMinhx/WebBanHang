@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.minh.dao.AccountDAO;
 import com.minh.dao.AddressDAO;
+import com.minh.dao.CategoryDAO;
 import com.minh.dao.DetailDAO;
 import com.minh.dao.OrderDAO;
 import com.minh.dao.ProductDAO;
 import com.minh.entity.Account;
 import com.minh.entity.Address;
+import com.minh.entity.Category;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
 import com.minh.entity.Product;
@@ -29,6 +31,7 @@ public class OtherServiceImpl implements OtherService {
 	@Autowired ProductDAO productdao;
 	@Autowired DetailDAO detailDao;
 	@Autowired HttpSession session;
+	@Autowired CategoryDAO cateDao;
 	
 	// Chi tiết sản phẩm
 	@Override
@@ -97,5 +100,11 @@ public class OtherServiceImpl implements OtherService {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	// Listloai
+	@Override
+	public List<Category> listCate(){
+		return cateDao.AllLoai();
 	}
 }

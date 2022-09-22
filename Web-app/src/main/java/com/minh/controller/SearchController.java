@@ -26,7 +26,6 @@ public class SearchController {
 	@Autowired SessionService sessionService;
 	@Autowired ProductDAO productDao;
 	@Autowired CategoryDAO cateDao;
-	@Autowired ProductDAO dao;
 	
 	// Tạo ra list categories
 	@ModelAttribute("categories")
@@ -37,7 +36,6 @@ public class SearchController {
 	@RequestMapping("/search")
 	public String aboutz(Model model, @RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p) {
 		String kwords = kw.orElse(sessionService.get("keywords"));
-		System.out.println(kwords);
 		sessionService.set("keywords", kwords);
 			
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
@@ -57,6 +55,4 @@ public class SearchController {
 		return "/home/listloai";
 	}
 	
-	
-
 }

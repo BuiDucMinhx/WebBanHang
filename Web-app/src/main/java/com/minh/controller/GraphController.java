@@ -41,9 +41,7 @@ public class GraphController {
 		Map<String, Integer> surveyMap = new LinkedHashMap<>();
 		for (int i = 0; i < list.size(); i++) {
 			surveyMap.put(list.get(i).getName(), 100-list.get(i).getQty());
-			
 		}
-	
 		model.addAttribute("surveyMap", surveyMap);
 		model.addAttribute("pro", "đã bán");
 		return "auth/barGraph";

@@ -8,7 +8,7 @@
 
 	
 </head>
-<body >
+<body ng-app="MyApp" ng-controller="MyController">
 	<div class="fh5co-loader"></div>
 	
 	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(imgs/bg.jpg);">
@@ -26,7 +26,6 @@
 			</div>
 		</div>
 	</header>
-	
 	<div id="fh5co-about">
 		<div class="container">
 			<div class="about-content">
@@ -48,11 +47,16 @@
 					</div>
 				</div>
 			</div>
+		</div>
 	</div>
-	
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
-
+    <script >
+        var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            $scope.IsVisible = false;
+        });
+    </script>
 </body>
 </html>
