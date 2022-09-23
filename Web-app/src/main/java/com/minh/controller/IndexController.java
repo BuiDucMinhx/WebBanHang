@@ -20,19 +20,18 @@ import com.minh.dao.CategoryDAO;
 import com.minh.dao.ProductDAO;
 import com.minh.entity.Category;
 import com.minh.entity.Product;
+import com.minh.service.OtherService;
 import com.minh.service.SessionService;
 
 // Các loại điều khiển chính và phụ
 @Controller
 public class IndexController {
-	@Autowired CategoryDAO cateDao;
-	@Autowired ProductDAO dao;
 	@Autowired SessionService sessionService;
-	@Autowired HttpSession session;
+	@Autowired OtherService otherService;
 	
 	@GetMapping("/index")
 	public String index(Model model) {
-		session.setAttribute("count", 0);
+		sessionService.set("count", 0);
 		return "/home/index";
 	}
 	
@@ -49,7 +48,7 @@ public class IndexController {
 	// Tạo ra list categories
 	@ModelAttribute("categories")
 	public List<Category> listCate(Model model) {
-		return cateDao.AllLoai();
+		return otherService.listCate();
 	}
 	
 	// Tạo ra list sản phẩm
@@ -58,7 +57,7 @@ public class IndexController {
 		Product item = new Product();
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
 		model.addAttribute("item", item);
-		Page<Product> items = dao.findall(pageable);
+		Page<Product> items = otherService.findAll(pageable);
 		return items;
 	}
 	
@@ -68,8 +67,7 @@ public class IndexController {
 		Product item = new Product();
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
 		model.addAttribute("item", item);
-		Page<Product> items = dao.findall(pageable);
-		System.out.println(items);
+		Page<Product> items = otherService.findAll(pageable);
 		return "home/shopage";
 	}
 	
@@ -77,14 +75,13 @@ public class IndexController {
 	public List<Product> top10(Model model) {
 		Product item = new Product();
 		model.addAttribute("item", item);
-		List<Product> items = dao.Top10();
+		List<Product> items = otherService.top10();
 		return items;
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN','USER')")
 	@GetMapping("/account")
 	public String account(Model model) {
-		System.out.println("lol");
 		return "/home/myaccount";
 	}
 	
@@ -96,7 +93,7 @@ public class IndexController {
 	
 	@RequestMapping("/rest")
 	public String rest(Model model) {
-		session.setAttribute("count", 0);
+		sessionService.set("count", 0);
 		return "/auth/RestfulAPI";
 	}
 	
@@ -106,7 +103,6 @@ public class IndexController {
 			if(!attach.isEmpty()) {
 				String fileName = attach.getOriginalFilename(); 
 				File file = new File("C:/Users/admin/Java 6/Web-app/src/main/resources/static/imgs/".toString() + fileName);
-				System.out.println(file);
 				attach.transferTo(file);
 				return "redirect:/manager"; 
 			}

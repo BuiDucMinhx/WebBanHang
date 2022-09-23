@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Entity
 
-public class Code implements Serializable {
+public class CodeModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	String number1;

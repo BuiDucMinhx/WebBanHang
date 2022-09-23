@@ -43,12 +43,14 @@
                 </div>
                 <div th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
             </fieldset>
-            
-            <div class="single-input-item">
-                <button   class="check-btn sqr-btn" id="#submitButton">Lưu thay đổi</button>
-            	
-            </div>
 
+            <div class="row">
+			  <div class="col-md-4">
+  	            <div class="single-input-item">
+                	<button class="check-btn sqr-btn" id="#submitButton">Lưu thay đổi</button>
+            	</div>
+			  </div>
+			</div>
         </form>
     </div>
 	

@@ -23,46 +23,44 @@ import com.minh.entity.Account;
 import com.minh.entity.Address;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
-import com.minh.model.Myaccount;
+import com.minh.model.MyAccountModel;
 import com.minh.model.OrderModel;
+import com.minh.service.OtherService;
 import com.minh.service.UserService;
 
 // Quản lí tải khoản của tôi
 @Controller
 public class MyaccountController {
-	@Autowired AccountDAO accountDao;
-	@Autowired OrderDAO orderDao;
-	@Autowired DetailDAO detailDao;
 	@Autowired UserService validationService;
-	@Autowired AddressDAO addressDao;
+	@Autowired OtherService otherService;
 	
     @GetMapping("/tab1")
     public String tab(Model model, Principal principal) {
         String username = principal.getName();
-        ArrayList<Detail> list1 = detailDao.getbyusername(username);
-		ArrayList<OrderModel> list = orderDao.getOrderModel(username);
-		System.out.println(list);
+        ArrayList<Detail> list = otherService.detailList(username);
 		model.addAttribute("location", 0);
-		model.addAttribute("order", list1);
+		model.addAttribute("order", list);
         return "tab/_tab1";
     }
     
     @GetMapping("/tab2")
     public String tab2(Model model, Principal principal) {
     	String username = principal.getName();
-    	Account account = accountDao.getById(username);
-    	Myaccount myaccount = new Myaccount();
-    	myaccount.setEmail(account.getEmail());
-    	myaccount.setFullname(account.getFullname());
-    	myaccount.setCurpassword("");
-    	myaccount.setNewpassword("");
-    	myaccount.setRepassword("");
+    	MyAccountModel myaccount = otherService.getMyAccountInfo(username);
     	model.addAttribute("user", myaccount);
         return "tab/_tab2";
     }
     
+    @GetMapping("/tab3")
+    public String tab3(Model model, Principal principal) {
+    	String username = principal.getName();
+    	Address entity = otherService.getAccountAddress(username);
+    	model.addAttribute("ad", entity);
+        return "tab/_tab3";
+    }
+    
     @PostMapping("/update")
-	public String save(Model model, @ModelAttribute("user") @Valid Myaccount entity, Errors errors, BindingResult result, Principal principal) {		
+	public String saveChange(Model model, @ModelAttribute("user") @Valid MyAccountModel entity, Errors errors, BindingResult result, Principal principal) {		
     	String err = validationService.validateUser(principal, entity);
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
@@ -72,31 +70,14 @@ public class MyaccountController {
 	        return "tab/_tab2";
 	    }
 		String username = principal.getName();
-		Account account = accountDao.getById(username);
-		account.setPassword(entity.getNewpassword());
-		account.setFullname(entity.getFullname());
-		accountDao.save(account);
-		System.out.println("Lưu thông tin thành công");
+		otherService.saveChangeInfo(username, entity.getFullname(), entity.getNewpassword());
+		model.addAttribute("msg","Lưu thông tin thành công");
 		return "redirect:/account";
 	}
     
-    @GetMapping("/tab3")
-    public String tab3(Model model, Principal principal) {
-    	String username = principal.getName();
-    	Address address = addressDao.getAddress(username);
-    	Address entity = new Address();
-    	entity.setFirstname(address.getFirstname());
-    	entity.setLastname(address.getLastname());
-    	entity.setAddress(address.getAddress());
-    	entity.setPhone(address.getPhone());
-    	entity.setCountry(address.getCountry());
-    	model.addAttribute("ad", entity);
-        return "tab/_tab3";
-    }
-    
     @RequestMapping("/view{name}")
-    public String s(Model model, @PathVariable String name  ) {
-    	List<Order> orders = orderDao.getOrderByName(name);
+    public String otherDetail(Model model, @PathVariable String name  ) {
+    	List<Order> orders = otherService.getOrderByName(name);
     	double sum = 0;
     	for (Order order : orders) {
 			sum += (order.getProduct().getPrice()*order.getQty());

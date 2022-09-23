@@ -42,5 +42,4 @@ public class AuthRestController {
 	public void delete(@PathVariable("id") Integer id) {
 		authorityDao.deleteById(id);
 	}
-
 }

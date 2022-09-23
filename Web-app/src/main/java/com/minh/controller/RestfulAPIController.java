@@ -40,6 +40,7 @@ public class RestfulAPIController {
 	@Autowired AccountDAO accountdao; 
 	@Autowired AuthorityDAO authoritydao; 
 	@Autowired SessionService sessionservice;
+	@Autowired DetailDAO detaildao;
 	
 	
 	//Product
@@ -135,7 +136,6 @@ public class RestfulAPIController {
 	}
 	
 	//Order detail
-	@Autowired DetailDAO detaildao;
 	@GetMapping("/rest/details")
 	public List<Detail>  getAll3(Model model) {
 		return detaildao.findAll();

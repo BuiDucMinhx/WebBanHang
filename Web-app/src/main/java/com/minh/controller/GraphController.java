@@ -12,6 +12,7 @@ import com.minh.dao.DetailDAO;
 import com.minh.dao.ProductDAO;
 import com.minh.entity.Detail;
 import com.minh.entity.Product;
+import com.minh.service.OtherService;
 
 
 // Tạo biểu đồ cột và tròn
@@ -20,16 +21,11 @@ public class GraphController {
 	@Autowired DetailDAO detaildao;
 	@Autowired AccountDAO accountdao;
 	@Autowired ProductDAO productdao;
+	@Autowired OtherService otherService;
 	
 	@GetMapping("/displayBarGraph")
 	public String barGraph(Model model) {
-		List<Product> list = productdao.findAll();
-		Map<String, Integer> surveyMap = new LinkedHashMap<>();
-	
-		for (int i = 0; i < list.size(); i++) {
-			surveyMap.put(list.get(i).getName(), list.get(i).getQty());
-			
-		}
+		Map<String, Integer> surveyMap = otherService.surveyMapInventory();
 		model.addAttribute("surveyMap", surveyMap);
 		model.addAttribute("pro", "tồn kho");
 		return "auth/barGraph";
@@ -37,11 +33,7 @@ public class GraphController {
 	
 	@GetMapping("/displayBarGraph1")
 	public String barGraph1(Model model) {
-		List<Product> list = productdao.findAll();
-		Map<String, Integer> surveyMap = new LinkedHashMap<>();
-		for (int i = 0; i < list.size(); i++) {
-			surveyMap.put(list.get(i).getName(), 100-list.get(i).getQty());
-		}
+		Map<String, Integer> surveyMap = otherService.surveyMapSold();
 		model.addAttribute("surveyMap", surveyMap);
 		model.addAttribute("pro", "đã bán");
 		return "auth/barGraph";
@@ -49,11 +41,8 @@ public class GraphController {
 
 	@GetMapping("/displayPieChart")
 	public String pieChart(Model model) {
-		List<Detail> list1 = detaildao.findalltrue();
-		List<Detail> list2 = detaildao.findallfalse();
-		double x = list1.size();
-		double y = list2.size();
-		System.out.println(y==0?x=100:(x/y)*100);
+		double x = otherService.size(1);
+		double y = otherService.size(2);
 		model.addAttribute("user2", y==0?x=100:(x/y)*100);
 		model.addAttribute("user3", x==0?x=100:(y/x)*100);
 		return "auth/pieChart";

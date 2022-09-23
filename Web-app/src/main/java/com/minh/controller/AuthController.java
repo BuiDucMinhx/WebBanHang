@@ -14,14 +14,17 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.minh.MailerService.MailerService;
+
 import com.minh.dao.AccountDAO;
+import com.minh.dao.AddressDAO;
 import com.minh.dao.AuthorityDAO;
 import com.minh.entity.Account;
+import com.minh.entity.Address;
 import com.minh.entity.Authority;
 import com.minh.entity.Role;
-import com.minh.model.Code;
-import com.minh.model.Myaccount;
+import com.minh.mailerService.MailerService;
+import com.minh.model.CodeModel;
+import com.minh.model.MyAccountModel;
 import com.minh.service.SessionService;
 import com.minh.service.UserService;
 
@@ -38,6 +41,7 @@ public class AuthController {
 	@Autowired AccountDAO  accountDao;
 	@Autowired AccountDAO accountdao;
     @Autowired AuthorityDAO authoritydao;
+	@Autowired AddressDAO addressDao; 
 	
 
 	// Đăng nhập_________________________________________________
@@ -84,7 +88,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public String postregister(Model model,@ModelAttribute("register") Myaccount entity, BindingResult result ) throws MessagingException {
+	public String postregister(Model model,@ModelAttribute("register") MyAccountModel entity, BindingResult result ) throws MessagingException {
 		int code = (int) Math.floor(((Math.random() * 899999) + 100000));
 		mailer.send(entity.getEmail(), "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
 		sessionservice.set("email", entity.getEmail());
@@ -93,14 +97,12 @@ public class AuthController {
 	}
 	
 	@PostMapping("/submitcode")
-	public String code(Model model, @ModelAttribute("code") Code edoc) throws MessagingException {
+	public String code(Model model, @ModelAttribute("code") CodeModel edoc) throws MessagingException {
 		String code = sessionservice.get("code");
 		String email = sessionservice.get("email");
-		System.out.println(email);
 		String entercode = edoc.getNumber1()+edoc.getNumber2()+edoc.getNumber3()+edoc.getNumber4()+edoc.getNumber5()+edoc.getNumber6();
 		if(entercode.equals(code)) {
-			System.out.println("đúng mã");
-			model.addAttribute("account",new Myaccount());
+			model.addAttribute("account",new MyAccountModel());
 			return "auth/newpass";
 		}
 		model.addAttribute("wrong","Sai mã xác nhận vui lòng kiểm tra lại!");
@@ -108,7 +110,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/newaccount")
-	public String newaccount(Model model, @ModelAttribute("account") @Valid Myaccount myaccount, BindingResult result) throws MessagingException {
+	public String newaccount(Model model, @ModelAttribute("account") @Valid MyAccountModel myaccount, BindingResult result) throws MessagingException {
 		String err = validationService.validatepass(myaccount);
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
@@ -119,11 +121,15 @@ public class AuthController {
 		account.setUsername(sessionservice.get("email"));
 		account.setEmail(sessionservice.get("email"));
 		account.setPassword(pe.encode(myaccount.getNewpassword()) );
+		
 		Authority authority = new Authority();
 		authority.setAccount(account);
 		authority.setRole(new Role("USER","Users"));
-		accountdao.save(account);
+		
+		Address address = new Address("Guest Country","Guest FirstName","Guest LastName","Guess Address","Guest Phone","guest@gmail.com",account);
+		accountdao.saveAndFlush(account);
 		authoritydao.save(authority);
+		addressDao.saveAndFlush(address);
 		model.addAttribute("message","Đăng kí thành công");
 		return "auth/login";
 	}

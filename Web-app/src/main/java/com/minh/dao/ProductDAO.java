@@ -16,28 +16,28 @@ public interface ProductDAO extends JpaRepository<Product, Integer>{
 	List<Product> Top10();
 	
 	@Query(value="select * from products", nativeQuery = true)
-	Page<Product> findall(Pageable pageable);
+	Page<Product> findAll(Pageable pageable);
 	
 	@Query(value="select * from products ORDER BY name ASC; ", nativeQuery = true)
-	Page<Product> findallaz(Pageable pageable);
+	Page<Product> findAllaz(Pageable pageable);
 	
 	@Query(value="select * from products ORDER BY name DESC; ", nativeQuery = true)
-	Page<Product> findallza(Pageable pageable);
+	Page<Product> findAllza(Pageable pageable);
 	
 	@Query(value="select * from products ORDER BY price DESC; ", nativeQuery = true)
-	Page<Product> findalllow(Pageable pageable);
+	Page<Product> findAlllow(Pageable pageable);
 	
 	@Query(value="select * from products ORDER BY price ASC; ", nativeQuery = true)
-	Page<Product> findallhigh(Pageable pageable);
+	Page<Product> findAllhigh(Pageable pageable);
 	
 	
 	@Query(value="SELECT * FROM Products WHERE categoryid = ?1 ", nativeQuery = true)
 	ArrayList<Product> ListTheoLoai1(int number1);
 	
 	@Query(value = "SELECT * FROM Products WHERE name like ?1", nativeQuery = true)
-	Page<Product> fillByKeywords2(String keywords, Pageable pageable);
+	Page<Product> fillByKeywords(String keywords, Pageable pageable);
 	
 	@Query(value="SELECT * FROM Products WHERE categoryid = ?1 ", nativeQuery = true)
-	Page<Product> ListTheoLoai2(int number1, Pageable pageable);
+	Page<Product> ListTheoLoai(int number1, Pageable pageable);
 	
 }

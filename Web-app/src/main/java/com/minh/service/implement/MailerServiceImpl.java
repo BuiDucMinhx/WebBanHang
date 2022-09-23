@@ -1,4 +1,4 @@
-package com.minh.MailerService;
+package com.minh.service.implement;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.minh.mailerService.MailInfo;
+import com.minh.mailerService.MailerService;
 
 
 @Service

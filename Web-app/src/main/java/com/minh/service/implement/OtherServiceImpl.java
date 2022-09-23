@@ -1,11 +1,17 @@
-package com.minh.service;
+package com.minh.service.implement;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.minh.dao.AccountDAO;
 import com.minh.dao.AddressDAO;
@@ -19,7 +25,10 @@ import com.minh.entity.Category;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
 import com.minh.entity.Product;
+import com.minh.model.MyAccountModel;
 import com.minh.model.ProductModel;
+import com.minh.service.OtherService;
+import com.minh.service.ShoppingCartService;
 
 @Service
 public class OtherServiceImpl implements OtherService {
@@ -32,8 +41,8 @@ public class OtherServiceImpl implements OtherService {
 	@Autowired DetailDAO detailDao;
 	@Autowired HttpSession session;
 	@Autowired CategoryDAO cateDao;
+	@Autowired BCryptPasswordEncoder pe;
 	
-	// Chi tiết sản phẩm
 	@Override
 	public ProductModel Detail(Integer id) {
 		ProductModel Productmodel = new ProductModel();
@@ -46,10 +55,8 @@ public class OtherServiceImpl implements OtherService {
 		return Productmodel;
 	}
 	
-	// Đặt hàng
 	@Override
 	public void Checkout(Address entity, String userName) {
-
 		Account account = accountDao.getById(userName);
 		Address address = addressDao.getAddress(userName);
 		try {
@@ -106,5 +113,107 @@ public class OtherServiceImpl implements OtherService {
 	@Override
 	public List<Category> listCate(){
 		return cateDao.AllLoai();
+	}
+	
+	@Override
+	public Page<Product> searchbykey(String kword, Pageable pageable){
+		Page<Product> pageresult = productdao.fillByKeywords("%" + kword + "%", pageable);
+		return pageresult;
+	}
+	
+	@Override
+	public Page<Product> searchbylist(int id, Pageable pageable){
+		Page<Product> list = productDao.ListTheoLoai(id, pageable);
+		return list;
+	}
+	
+	@Override
+	public Page<Product> findAll(Pageable pageable){
+		Page<Product> list = productDao.findAll(pageable);
+		return list;
+	}
+	
+	@Override
+	public List<Product> top10(){
+		List<Product> list = productDao.Top10();
+		return list;
+	}
+	
+	@Override
+	public ArrayList<Detail> detailList(String username){
+		ArrayList<Detail> list = detailDao.getbyusername(username);
+		return list;
+	}
+	
+	@Override
+	public MyAccountModel getMyAccountInfo(String username) {
+    	MyAccountModel myaccount = new MyAccountModel();
+    	Account account = accountDao.getById(username);
+    	myaccount.setEmail(account.getEmail());
+    	myaccount.setFullname(account.getFullname());
+    	myaccount.setCurpassword("");
+    	myaccount.setNewpassword("");
+    	myaccount.setRepassword("");
+		return myaccount;
+	}
+	
+	@Override
+	public Address getAccountAddress(String username) {
+    	Address entity = new Address();
+    	Address address = addressDao.getAddress(username);
+    	entity.setFirstname(address.getFirstname());
+    	entity.setLastname(address.getLastname());
+    	entity.setAddress(address.getAddress());
+    	entity.setPhone(address.getPhone());
+    	entity.setCountry(address.getCountry());
+		return entity;
+	}
+
+
+	@Override
+	public void saveChangeInfo(String username, String fullName, String password) {
+		Account account = accountDao.getById(username);
+		account.setPassword(pe.encode(password));
+		account.setFullname(fullName);
+		accountDao.save(account);
+	}
+	@Override
+	public List<Order> getOrderByName(String name){
+		List<Order> orders = orderDao.getOrderByName(name);
+		return orders;
+	}
+	
+	@Override
+	public Map<String, Integer> surveyMapInventory(){
+		Map<String, Integer> surveyMap = new LinkedHashMap<>();
+		List<Product> list = productdao.findAll();
+
+		for (int i = 0; i < list.size(); i++) {
+			surveyMap.put(list.get(i).getName(), list.get(i).getQty());	
+		}
+		return surveyMap;
+	}
+	
+	@Override
+	public Map<String, Integer> surveyMapSold(){
+		Map<String, Integer> surveyMap = new LinkedHashMap<>();
+		List<Product> list = productdao.findAll();
+
+		for (int i = 0; i < list.size(); i++) {
+			surveyMap.put(list.get(i).getName(), 100-list.get(i).getQty());
+		}
+		return surveyMap;
+	}
+	
+	@Autowired DetailDAO detaildao;
+	
+	@Override
+	public double size(int listNumber){
+		List<Detail> list1 = detaildao.findalltrue();
+		List<Detail> list2 = detaildao.findallfalse();
+		if(listNumber == 1) {
+			return list1.size();
+		}
+		return list2.size();
 	}
 }

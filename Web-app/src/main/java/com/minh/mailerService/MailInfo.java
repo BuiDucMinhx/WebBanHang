@@ -1,4 +1,4 @@
-package com.minh.MailerService;
+package com.minh.mailerService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

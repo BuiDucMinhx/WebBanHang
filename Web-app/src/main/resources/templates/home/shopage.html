@@ -127,78 +127,48 @@
 	        $scope.form={}
 	        $scope.items= []
 	        $scope.cur = 0;
+	  		$scope.key = "";
 	        $scope.load_all = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
+	        	if(no<0) no = 0;
+	        	if(no>1) no = 1;
+	        	$scope.cur = no;
 	            var url = `${host}/products0/${no}`;
 	            $http.get(url).then(resp => {
 	                $scope.items = resp.data;
-	        
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	            }).catch(error => { })
 	        }
 	        $scope.load_allaz = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
 	            var url = `${host}/productsaz/${no}`;
 	            $http.get(url).then(resp => {
 	                $scope.items = resp.data;
-	        
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	            }).catch(error => { })
 	        }
 	        $scope.load_allza = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
 	            var url = `${host}/productsza/${no}`;
 	            $http.get(url).then(resp => {
-	                $scope.items = resp.data;
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	                $scope.items = resp.data;   
+	            }).catch(error => { })
 	        }
 	        $scope.load_alllow = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
 	            var url = `${host}/productslow/${no}`;
 	            $http.get(url).then(resp => {
-	                $scope.items = resp.data;
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	                $scope.items = resp.data;  
+	            }).catch(error => { })
 	        }
 	        $scope.load_allhigh = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
 	            var url = `${host}/productshigh/${no}`;
 	            $http.get(url).then(resp => {
 	                $scope.items = resp.data;
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	            }).catch(error => { })
 	        }
-	  		$scope.key = "";
 	        $scope.search = function(no){
-	        	if(no<0){no = 0} 
-	        		$scope.cur = no;
 	            var url = `${host}/search/${no}?keywords=`+$scope.key;
 	            $http.get(url).then(resp => {
 	                $scope.items = resp.data;
-	                console.log("Success", resp)
-	            }).catch(error => {
-	                console.log("Error",error)
-	            })
+	            }).catch(error => { })
 	        }
 	        $scope.load_all(0);
-            $scope.IsVisible = true;
-         
+            $scope.IsVisible = true;         
 	    })
 	</script>
 </body>

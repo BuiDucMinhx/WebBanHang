@@ -15,14 +15,13 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Service;
 import com.minh.dao.AccountDAO;
 import com.minh.entity.Account;
-import com.minh.model.Myaccount;
+import com.minh.model.MyAccountModel;
 
 
 
 @Service
 public class UserService implements UserDetailsService{
 	@Autowired AccountDAO accountDao;
-	
 	@Autowired BCryptPasswordEncoder pe;
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
@@ -56,13 +55,14 @@ public class UserService implements UserDetailsService{
 	}
 	
 
-	public String validateUser(Principal principal , Myaccount user) {
+	public String validateUser(Principal principal , MyAccountModel user) {
 		String message = "";
         String username = principal.getName();
         Account account = accountDao.getById(username);
+        
         String curr = account.getPassword();
-        System.out.println(curr+" va "+ user.getCurpassword());
-        if (!user.getCurpassword().equals(curr)) {
+        
+        if (!pe.matches(user.getCurpassword(), curr)) {
         	message = "Sai mật khẩu hiện tại ";
         }else if (!user.getNewpassword().equals(user.getRepassword())) {
         	message = "Mật khẩu không trùng khớp! ";
@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService{
         return message;
     }
 	
-	public String validatepass(Myaccount user) {
+	public String validatepass(MyAccountModel user) {
 		String message = "";
         if (!user.getNewpassword().equals(user.getRepassword())) {
         	message = "Mật khẩu không trùng khớp ! ";

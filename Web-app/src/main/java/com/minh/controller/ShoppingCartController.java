@@ -28,9 +28,7 @@ public class ShoppingCartController {
 	@Autowired ShoppingCartService cart; 
 	@Autowired OtherService service;
 	@Autowired SessionService sessionService;
-	@Autowired HttpSession session;
 
-	
 	// Chi tiết sản phẩm theo id
 	@RequestMapping("/product{id}")
 	public String addetail(@PathVariable Integer id, Model model) {
@@ -45,7 +43,7 @@ public class ShoppingCartController {
 	@RequestMapping("/cart")
 	public String view(Model model) {
 		model.addAttribute("cart", cart); 
-		session.setAttribute("count", cart.getCount());
+		sessionService.set("count", cart.getCount());
 		return "home/cart"; 
 	}
 	
@@ -53,7 +51,7 @@ public class ShoppingCartController {
 	@RequestMapping("/cart/add/{id}")
 	public String add(@PathVariable int id) {
 		cart.add(id);
-		session.setAttribute("count", cart.getCount());
+		sessionService.set("count",  cart.getCount());
 		return "redirect:/cart"; // direct đến cart
 	}
 	
@@ -88,7 +86,7 @@ public class ShoppingCartController {
 	// Clear
 	@RequestMapping("/cart/clear")
 	public String clear() {
-		session.setAttribute("count", cart.getCount());
+		sessionService.set("count", cart.getCount());
 		sessionService.set("count", cart.getCount());
 		cart.clear();
 		return "redirect:/cart"; 

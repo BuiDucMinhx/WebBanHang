@@ -19,38 +19,38 @@ import com.minh.dao.CategoryDAO;
 import com.minh.dao.ProductDAO;
 import com.minh.entity.Category;
 import com.minh.entity.Product;
+import com.minh.service.OtherService;
 import com.minh.service.SessionService;
 
 @Controller
 public class SearchController {
 	@Autowired SessionService sessionService;
-	@Autowired ProductDAO productDao;
-	@Autowired CategoryDAO cateDao;
+	@Autowired OtherService otherService;
 	
 	// Tạo ra list categories
 	@ModelAttribute("categories")
-	public List<Category> indexx(Model model) {
-		return cateDao.AllLoai();
+	public List<Category> listCategory(Model model) {
+		return otherService.listCate();
 	}
 	
 	@RequestMapping("/search")
-	public String aboutz(Model model, @RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p) {
+	public String search(Model model, @RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p) {
 		String kwords = kw.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", kwords);
-			
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
-		Page<Product> list1 = productDao.fillByKeywords2("%" + kwords + "%", pageable);
+		Page<Product> list = otherService.searchbykey(kwords, pageable);
 		
 		model.addAttribute("kwords", kwords);
-		model.addAttribute("search", list1);
+		model.addAttribute("search", list);
 		return "/home/listsearch";
 	}
 	
 	@GetMapping("/list{id}")
-	public String index(@PathVariable("id") int id, Model model, @RequestParam("p") Optional<Integer> p) {
+	public String category(@PathVariable("id") int id, Model model, @RequestParam("p") Optional<Integer> p) {
 		sessionService.set("id",id);
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
-		Page<Product> list = productDao.ListTheoLoai2(id, pageable);
+		Page<Product> list = otherService.searchbylist(id, pageable);
+		
 		model.addAttribute("search", list);
 		return "/home/listloai";
 	}
