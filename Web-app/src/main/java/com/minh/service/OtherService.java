@@ -49,6 +49,8 @@ public interface OtherService {
 
 	double size(int listNumber);
 
+	String findEmail(String email);
+
 
 
 }

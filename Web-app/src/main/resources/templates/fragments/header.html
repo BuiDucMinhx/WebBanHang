@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
 <body>
     <!-- Start Header -->
@@ -16,19 +15,19 @@
                             <li><a href="/account" ><i class="fa fa-user"></i><span th:text="#{nav.account}"></span ></a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> <span th:text="#{nav.favorite}"></span ></a></li>
                             <li><a href="/cart"><i class="fa fa-user"></i> <span th:text="#{nav.cart}"></span ></a></li>
-                            <li><a href="/login"><i class="fa fa-user"></i> <span th:text="#{nav.login}"></span ></a></li>
+                            <li sec:authorize="!isAuthenticated()" ><a href="/login"><i class="fa fa-user"></i> <span th:text="#{nav.login}"></span ></a></li>
                             <li><a href="/auth/logoff"><i class="fa fa-user"></i> <span th:text="#{nav.logout}"></span ></a></li>
                             <li>
                             	<!-- Thông tin người dùng -->
 				                <main>
 									<h3 th:unless = "${#request.remoteUser}">
-										<i style="color: red">Chưa đăng nhập</i>
+										<i style="color: red"></i>
 									</h3>
 									<th:block th:if = "${#request.remoteUser}">
 										<ul>
 											<li> <span style="color: blue">Xin chào: </span><b>[[${#request.remoteUser}]]</b> </li>
 										</ul>
-									</th:block>	
+									</th:block>	                            
 								</main>
 						  		<!-- Thông tin người dùng -->
 						  </li>

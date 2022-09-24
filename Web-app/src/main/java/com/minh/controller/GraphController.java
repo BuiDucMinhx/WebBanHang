@@ -1,7 +1,6 @@
 package com.minh.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.minh.dao.AccountDAO;
 import com.minh.dao.DetailDAO;
 import com.minh.dao.ProductDAO;
-import com.minh.entity.Detail;
-import com.minh.entity.Product;
 import com.minh.service.OtherService;
 
 

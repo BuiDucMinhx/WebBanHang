@@ -16,21 +16,7 @@ import com.minh.service.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthConfig extends WebSecurityConfigurerAdapter{
-	// Mã hóa mật khẩu
-	@Bean
-	public BCryptPasswordEncoder getBCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Autowired
-	UserService userService;
-
-	// Quản lí người và dữ liệu người sử dụng
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(userService);		
-		
-	}
+	@Autowired UserService userService;
 	
 	// Phân quyền sử dụng và hình thức đăng nhập
 	@Override
@@ -74,5 +60,18 @@ public class AuthConfig extends WebSecurityConfigurerAdapter{
 		http.logout()
 			.logoutUrl("/auth/logoff")
 			.logoutSuccessUrl("/logoff");	
+	}
+	
+	// Mã hóa mật khẩu
+	@Bean
+	public BCryptPasswordEncoder getBCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	// Quản lí người và dữ liệu người sử dụng
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+		auth.userDetailsService(userService);		
+		
 	}
 }

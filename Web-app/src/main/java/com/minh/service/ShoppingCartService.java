@@ -2,7 +2,6 @@ package com.minh.service;
 
 import java.util.Collection;
 import java.util.List;
-import com.minh.model.ProductModel;
 import com.minh.entity.Product;
 
 public interface ShoppingCartService {

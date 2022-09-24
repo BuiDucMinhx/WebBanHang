@@ -3,7 +3,6 @@ package com.minh.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -86,7 +85,6 @@ public class ShoppingCartController {
 	// Clear
 	@RequestMapping("/cart/clear")
 	public String clear() {
-		sessionService.set("count", cart.getCount());
 		sessionService.set("count", cart.getCount());
 		cart.clear();
 		return "redirect:/cart"; 

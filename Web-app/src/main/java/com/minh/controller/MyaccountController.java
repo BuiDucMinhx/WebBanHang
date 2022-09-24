@@ -15,16 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.minh.dao.AccountDAO;
-import com.minh.dao.AddressDAO;
-import com.minh.dao.DetailDAO;
-import com.minh.dao.OrderDAO;
-import com.minh.entity.Account;
 import com.minh.entity.Address;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
 import com.minh.model.MyAccountModel;
-import com.minh.model.OrderModel;
 import com.minh.service.OtherService;
 import com.minh.service.UserService;
 

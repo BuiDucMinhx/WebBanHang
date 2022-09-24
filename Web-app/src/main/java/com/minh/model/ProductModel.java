@@ -1,13 +1,9 @@
 package com.minh.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import com.minh.entity.Product;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

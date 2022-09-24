@@ -1,10 +1,10 @@
 package com.minh.controller;
 
-
 import java.security.Principal;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,7 @@ import com.minh.entity.Role;
 import com.minh.mailerService.MailerService;
 import com.minh.model.CodeModel;
 import com.minh.model.MyAccountModel;
+import com.minh.service.OtherService;
 import com.minh.service.SessionService;
 import com.minh.service.UserService;
 
@@ -42,7 +43,7 @@ public class AuthController {
 	@Autowired AccountDAO accountdao;
     @Autowired AuthorityDAO authoritydao;
 	@Autowired AddressDAO addressDao; 
-	
+	@Autowired OtherService otherService;
 
 	// Đăng nhập_________________________________________________
 	@RequestMapping("/login")
@@ -86,11 +87,18 @@ public class AuthController {
 	public String register(Model model) {
 		return "auth/register";
 	}
-	
+
 	@PostMapping("/register")
-	public String postregister(Model model,@ModelAttribute("register") MyAccountModel entity, BindingResult result ) throws MessagingException {
+	public String register(Model model,@ModelAttribute("register") MyAccountModel entity) throws MessagingException {
+		String email = entity.getEmail();
+		String check = otherService.findEmail(email);
+		if(!(check == null)) {
+			model.addAttribute("msg", "Đã tồn tại tài khoản vui lòng nhập tên khác!");
+			return "auth/register";
+		}
+		
 		int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-		mailer.send(entity.getEmail(), "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
+		mailer.send(email, "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
 		sessionservice.set("email", entity.getEmail());
 		sessionservice.set("code", String.valueOf(code));
 		return "auth/vericode";
@@ -99,7 +107,6 @@ public class AuthController {
 	@PostMapping("/submitcode")
 	public String code(Model model, @ModelAttribute("code") CodeModel edoc) throws MessagingException {
 		String code = sessionservice.get("code");
-		String email = sessionservice.get("email");
 		String entercode = edoc.getNumber1()+edoc.getNumber2()+edoc.getNumber3()+edoc.getNumber4()+edoc.getNumber5()+edoc.getNumber6();
 		if(entercode.equals(code)) {
 			model.addAttribute("account",new MyAccountModel());

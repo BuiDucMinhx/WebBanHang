@@ -42,12 +42,13 @@ public class OtherServiceImpl implements OtherService {
 	@Autowired HttpSession session;
 	@Autowired CategoryDAO cateDao;
 	@Autowired BCryptPasswordEncoder pe;
+	@Autowired DetailDAO detaildao;
+	
 	
 	@Override
 	public ProductModel Detail(Integer id) {
 		ProductModel Productmodel = new ProductModel();
 		Product entity = productDao.getById(id);
-		Product item = new Product();
 		int loai = entity.getCategory().getId();
 	    ArrayList<Product> items = productDao.ListTheoLoai1(loai);
 	    Productmodel.setProduct(entity);
@@ -204,9 +205,7 @@ public class OtherServiceImpl implements OtherService {
 		}
 		return surveyMap;
 	}
-	
-	@Autowired DetailDAO detaildao;
-	
+
 	@Override
 	public double size(int listNumber){
 		List<Detail> list1 = detaildao.findalltrue();
@@ -215,5 +214,12 @@ public class OtherServiceImpl implements OtherService {
 			return list1.size();
 		}
 		return list2.size();
+	}
+	
+
+	@Override
+	public String findEmail(String email) {
+		email = accountDao.findEmail(email);
+		return email;
 	}
 }

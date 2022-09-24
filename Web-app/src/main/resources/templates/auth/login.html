@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
 	th:replace="~{/site/layout2::dynamic(~{::body})}">
 <head>
 <meta charset="utf-8">
@@ -17,7 +18,8 @@
 								<div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mb20">
 									<h3 class="mb10">Đăng nhập</h3>
 								</div>
-								<!-- form -->
+								
+								<!-- Form -->
 								<i th:text="${message}" style="color: red"></i>
 								<form action="/login" method=post>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -52,9 +54,7 @@
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 ">
 										<button class="btn btn-primary btn-block mb10">Đăng nhập</button>
 										<div>
-											<p>
-												Bạn không có tài khoản? <a href="/register">Đăng kí ngay</a>
-											</p>
+											<p> Bạn không có tài khoản? <a href="/register">Đăng kí ngay</a> </p>
 										</div>
 									</div>
 								</form>
@@ -69,7 +69,8 @@
 											class="fa fa-google"></i><span class="social-text">Google </span></a>
 									</div>
 								</div>
-								<!-- /.form -->
+								<!-- Form -->
+								
 							</div>
 						</div>
 					</div>
@@ -78,20 +79,15 @@
 						<div class="box-body">
 							<div>
 								<div class="feature-icon">
-									<a href="/index"><img src="https://st2.depositphotos.com/5486388/8033/v/950/depositphotos_80335040-stock-illustration-gear-logo-template.jpg"
-										 alt="" style="width: 300px; height: 300px;" ></a>
+									<a href="/index"><img src="https://st2.depositphotos.com/5486388/8033/v/950/depositphotos_80335040-stock-illustration-gear-logo-template.jpg" alt="" style="width: 300px; height: 300px;" ></a>
 								</div>
 								<div class="feature-content"></div>
 								<p class="text">Nền tảng cung cấp mặt hàng công nghệ tốt nhất Thế giới.</p>
 							</div>
-
 						</div>
 					</div>
 					<!-- /.features -->
-
-
 				</div>
-
 			</div>
 		</div>
 	</div>

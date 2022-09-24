@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.minh.dao.CategoryDAO;
-import com.minh.dao.ProductDAO;
 import com.minh.entity.Category;
 import com.minh.entity.Product;
 import com.minh.service.OtherService;
