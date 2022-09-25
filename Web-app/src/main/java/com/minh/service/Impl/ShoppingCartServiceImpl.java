@@ -1,4 +1,4 @@
-package com.minh.service.implement;
+package com.minh.service.Impl;
 
 
 import java.util.Collection;

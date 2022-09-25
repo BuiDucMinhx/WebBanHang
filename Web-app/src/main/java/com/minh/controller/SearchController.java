@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.minh.entity.Category;
 import com.minh.entity.Product;
-import com.minh.service.OtherService;
+import com.minh.service.ProductService;
 import com.minh.service.SessionService;
 
 @Controller
 public class SearchController {
 	@Autowired SessionService sessionService;
-	@Autowired OtherService otherService;
+	@Autowired ProductService productService;
 	
 	// Tạo ra list categories
 	@ModelAttribute("categories")
 	public List<Category> listCategory(Model model) {
-		return otherService.listCate();
+		return productService.listCate();
 	}
 	
 	@RequestMapping("/search")
@@ -35,7 +35,7 @@ public class SearchController {
 		String kwords = kw.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", kwords);
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
-		Page<Product> list = otherService.searchbykey(kwords, pageable);
+		Page<Product> list = productService.searchbykey(kwords, pageable);
 		
 		model.addAttribute("kwords", kwords);
 		model.addAttribute("search", list);
@@ -46,10 +46,9 @@ public class SearchController {
 	public String category(@PathVariable("id") int id, Model model, @RequestParam("p") Optional<Integer> p) {
 		sessionService.set("id",id);
 		Pageable pageable = PageRequest.of(p.orElse(0), 2);
-		Page<Product> list = otherService.searchbylist(id, pageable);
+		Page<Product> list = productService.searchbylist(id, pageable);
 		
 		model.addAttribute("search", list);
 		return "/home/listloai";
 	}
-	
 }

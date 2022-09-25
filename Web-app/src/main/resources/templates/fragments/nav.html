@@ -42,7 +42,7 @@
                         <li><a href = "/about" th:text="#{nav.about}">Giới thiệu</a></li>
                         <li><a href = "/shop" th:text="#{nav.shop}" ng-click="ShowHide()">Mua sắm</a></li>
                      	<li><a>||</a> </li>
-						<li><a href="/manager" th:text="#{nav.manager}"><span><i class="fa fa-audio-description"  aria-hidden="true"></i></span > Quản lí </a></li>
+						<li sec:authorize="hasRole('ADMIN')"><a href="/manager" th:text="#{nav.manager}"><span><i class="fa fa-audio-description"  aria-hidden="true"></i></span > Quản lí </a></li>
                     </ul>
                 </div>  
             </div>

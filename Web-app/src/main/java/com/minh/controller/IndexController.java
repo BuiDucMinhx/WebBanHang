@@ -3,7 +3,6 @@ package com.minh.controller;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,18 +15,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import com.minh.dao.CategoryDAO;
-import com.minh.dao.ProductDAO;
 import com.minh.entity.Category;
 import com.minh.entity.Product;
-import com.minh.service.OtherService;
+import com.minh.service.ProductService;
 import com.minh.service.SessionService;
 
 // Các loại điều khiển chính và phụ
 @Controller
 public class IndexController {
 	@Autowired SessionService sessionService;
-	@Autowired OtherService otherService;
+	@Autowired ProductService productService;
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -48,7 +45,7 @@ public class IndexController {
 	// Tạo ra list categories
 	@ModelAttribute("categories")
 	public List<Category> listCate(Model model) {
-		return otherService.listCate();
+		return productService.listCate();
 	}
 	
 	// Tạo ra list sản phẩm
@@ -57,25 +54,21 @@ public class IndexController {
 		Product item = new Product();
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
 		model.addAttribute("item", item);
-		Page<Product> items = otherService.findAll(pageable);
+		Page<Product> items = productService.findAll(pageable);
 		return items;
 	}
 	
 	// Điều khiển tới lui
 	@RequestMapping("/items")
-	public String showc(Model model, @RequestParam("p") Optional<Integer> p) {
+	public String showc(Model model) {
 		Product item = new Product();
-		Pageable pageable = PageRequest.of(p.orElse(0), 12);
 		model.addAttribute("item", item);
-		Page<Product> items = otherService.findAll(pageable);
 		return "home/shopage";
 	}
 	
 	@ModelAttribute("item10")
 	public List<Product> top10(Model model) {
-		Product item = new Product();
-		model.addAttribute("item", item);
-		List<Product> items = otherService.top10();
+		List<Product> items = productService.top10();
 		return items;
 	}
 	
@@ -145,7 +138,4 @@ public class IndexController {
 	public String authorize(Model model) {
 		return "/auth/authorize";
 	}
-	
-	
-	
 }

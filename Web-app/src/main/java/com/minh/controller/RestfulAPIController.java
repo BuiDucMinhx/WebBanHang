@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.minh.dao.AccountDAO;
-import com.minh.dao.AuthorityDAO;
 import com.minh.dao.CategoryDAO;
 import com.minh.dao.DetailDAO;
 import com.minh.dao.ProductDAO;
@@ -32,18 +31,17 @@ import com.minh.service.ShoppingCartService;
 @RestController
 public class RestfulAPIController {
 	@Autowired ShoppingCartService service;
-	@Autowired ProductDAO productdao;
-	@Autowired CategoryDAO Catedao;
-	@Autowired AccountDAO accountdao; 
-	@Autowired AuthorityDAO authoritydao; 
 	@Autowired SessionService sessionservice;
+	@Autowired ProductDAO productDao;
+	@Autowired CategoryDAO cateDao;
+	@Autowired AccountDAO accountDao; 
 	@Autowired DetailDAO detaildao;
 	
 	
 	//Product
 	@GetMapping("/rest/products")
 	public List<Product>  getAll1(Model model) {
-		return productdao.findAll();
+		return productDao.findAll();
 	}
 	
 	@GetMapping("/rest/products0/{no}")
@@ -78,57 +76,57 @@ public class RestfulAPIController {
 	
 	@GetMapping("/rest/products/{id}")
 	public Product  getOne1(Model model, @PathVariable("id") Integer id) {
-		return productdao.findById(id).get();
+		return productDao.findById(id).get();
 	}	
 	@PostMapping("/rest/products")
 	public Product Post1(@RequestBody Product product) {
-		productdao.save(product);
+		productDao.save(product);
 		return product ;
 	}
 	@PutMapping("/rest/products/{id}")
 	public Product Put1(@PathVariable("id") String id, @RequestBody Product product) {
-		productdao.save(product);
+		productDao.save(product);
 		return product;
 	}
 	@DeleteMapping("/rest/products/{id}")
 	public void Delete1(@PathVariable("id") Integer id) {
-		productdao.deleteById(id);
+		productDao.deleteById(id);
 	}
 	
 	//Category
 	@GetMapping("/rest/categories")
 	public ResponseEntity<List<Category>>  getAll2(Model model) {
-		return ResponseEntity.ok(Catedao.findAll());
+		return ResponseEntity.ok(cateDao.findAll());
 	}
 	@GetMapping("/rest/categories/{id}")
 	public ResponseEntity<Category> getOne2(@PathVariable("id") Integer id){
-		if(!Catedao.existsById(id)) {
+		if(!cateDao.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(Catedao.findById(id).get());
+		return ResponseEntity.ok(cateDao.findById(id).get());
 	}
 	@PostMapping("/rest/categories")
 	public ResponseEntity<Category> post2(@RequestBody Category category){
-		if(Catedao.existsById(category.getId())) {
+		if(cateDao.existsById(category.getId())) {
 			return ResponseEntity.badRequest().build();
 		}
-		Catedao.save(category);
+		cateDao.save(category);
 		return ResponseEntity.ok(category);
 	}
 	@PutMapping("/rest/categories/{id}")
 	public ResponseEntity<Category> put2(@PathVariable("id") Integer id, @RequestBody Category category){
-		if(!Catedao.existsById(id)) {
+		if(!cateDao.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		Catedao.save(category);
+		cateDao.save(category);
 		return ResponseEntity.ok(category);
 	}
 	@DeleteMapping("/rest/categories/{id}")
 	public ResponseEntity<Void> delete2(@PathVariable("id") Integer id){
-		if(!Catedao.existsById(id)) {
+		if(!cateDao.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		Catedao.deleteById(id);
+		cateDao.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 	
@@ -166,12 +164,12 @@ public class RestfulAPIController {
 	//Account guest and user
 	@GetMapping("/rest/accounts")
 	public List<Account>  getAll4(Model model) {
-		return accountdao.findAll();
+		return accountDao.findAll();
 	}	
 	
 	@GetMapping("/rest/accounts/{roleid}")
 	public List<Account>  getOnex(Model model, @PathVariable("roleid") String roleid) {
-		return accountdao.findbyroleid(roleid);
+		return accountDao.findbyroleid(roleid);
 	}	
 		
 }

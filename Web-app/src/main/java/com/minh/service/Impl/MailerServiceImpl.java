@@ -1,4 +1,4 @@
-package com.minh.service.implement;
+package com.minh.service.Impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.minh.mailerService.MailInfo;
-import com.minh.mailerService.MailerService;
+import com.minh.model.MailInfoModel;
+import com.minh.service.MailerService;
 
 
 @Service
@@ -21,7 +21,7 @@ public class MailerServiceImpl implements MailerService {
 	JavaMailSender sender;
 
 	@Override
-	public void send(MailInfo mail) throws MessagingException {
+	public void send(MailInfoModel mail) throws MessagingException {
 		
 		// Tạo message
 		MimeMessage message = sender.createMimeMessage();
@@ -54,28 +54,28 @@ public class MailerServiceImpl implements MailerService {
 
 	@Override
 	public void send(String to, String subject, String body) throws MessagingException {
-		this.send(new MailInfo(to, subject, body));
+		this.send(new MailInfoModel(to, subject, body));
 	}
 
 
 	// xếp MailInfo vào List<MailInfo> (hàng đợi)
-	List<MailInfo> list = new ArrayList<>();
+	List<MailInfoModel> list = new ArrayList<>();
 
 	@Override
-	public void queue(MailInfo mail) {
+	public void queue(MailInfoModel mail) {
 		list.add(mail);
 	}
 
 	@Override
 	public void queue(String to, String subject, String body) {
-		queue(new MailInfo(to, subject, body));
+		queue(new MailInfoModel(to, subject, body));
 	}
 	
 	//  lấy MailInfo từ hàng đợi và gửi đi (5 giây sẽ kiểm tra và gửi một lần)
 	@Scheduled(fixedDelay = 5000)
 	public void run() {
 		while (!list.isEmpty()) {
-			MailInfo mail = list.remove(0);
+			MailInfoModel mail = list.remove(0);
 			try {
 				this.send(mail);
 			} catch (Exception e) {

@@ -4,7 +4,6 @@ import java.security.Principal;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -14,36 +13,23 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.minh.dao.AccountDAO;
-import com.minh.dao.AddressDAO;
-import com.minh.dao.AuthorityDAO;
-import com.minh.entity.Account;
-import com.minh.entity.Address;
-import com.minh.entity.Authority;
-import com.minh.entity.Role;
-import com.minh.mailerService.MailerService;
 import com.minh.model.CodeModel;
 import com.minh.model.MyAccountModel;
-import com.minh.service.OtherService;
+import com.minh.service.AccountService;
+import com.minh.service.MailerService;
 import com.minh.service.SessionService;
 import com.minh.service.UserService;
 
 // Đăng kí và đăng nhập
 @Controller
 public class AuthController {
-	@Autowired BCryptPasswordEncoder pe;
 	@Autowired SessionService sessionService;
 	@Autowired UserService userService;
 	@Autowired MailerService mailer;
-	@Autowired SessionService sessionservice;
     @Autowired UserService validationService;
+	@Autowired AccountService accountService;
 	
-	@Autowired AccountDAO  accountDao;
-	@Autowired AccountDAO accountdao;
-    @Autowired AuthorityDAO authoritydao;
-	@Autowired AddressDAO addressDao; 
-	@Autowired OtherService otherService;
+	@Autowired BCryptPasswordEncoder pe;
 
 	// Đăng nhập_________________________________________________
 	@RequestMapping("/login")
@@ -91,22 +77,22 @@ public class AuthController {
 	@PostMapping("/register")
 	public String register(Model model,@ModelAttribute("register") MyAccountModel entity) throws MessagingException {
 		String email = entity.getEmail();
-		String check = otherService.findEmail(email);
+		String check = accountService.findEmail(email);
+		int code = accountService.sendCodeEmail(email);
+		
 		if(!(check == null)) {
 			model.addAttribute("msg", "Đã tồn tại tài khoản vui lòng nhập tên khác!");
 			return "auth/register";
 		}
 		
-		int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-		mailer.send(email, "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
-		sessionservice.set("email", entity.getEmail());
-		sessionservice.set("code", String.valueOf(code));
+		sessionService.set("email", entity.getEmail());
+		sessionService.set("code", String.valueOf(code));
 		return "auth/vericode";
 	}
 	
 	@PostMapping("/submitcode")
 	public String code(Model model, @ModelAttribute("code") CodeModel edoc) throws MessagingException {
-		String code = sessionservice.get("code");
+		String code = sessionService.get("code");
 		String entercode = edoc.getNumber1()+edoc.getNumber2()+edoc.getNumber3()+edoc.getNumber4()+edoc.getNumber5()+edoc.getNumber6();
 		if(entercode.equals(code)) {
 			model.addAttribute("account",new MyAccountModel());
@@ -119,24 +105,13 @@ public class AuthController {
 	@PostMapping("/newaccount")
 	public String newaccount(Model model, @ModelAttribute("account") @Valid MyAccountModel myaccount, BindingResult result) throws MessagingException {
 		String err = validationService.validatepass(myaccount);
+		myaccount.setEmail(sessionService.get("email"));
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
 	        result.addError(error);
 	        return "auth/newpass";
 	    }
-		Account account = new Account();
-		account.setUsername(sessionservice.get("email"));
-		account.setEmail(sessionservice.get("email"));
-		account.setPassword(pe.encode(myaccount.getNewpassword()) );
-		
-		Authority authority = new Authority();
-		authority.setAccount(account);
-		authority.setRole(new Role("USER","Users"));
-		
-		Address address = new Address("Guest Country","Guest FirstName","Guest LastName","Guess Address","Guest Phone","guest@gmail.com",account);
-		accountdao.saveAndFlush(account);
-		authoritydao.save(authority);
-		addressDao.saveAndFlush(address);
+		accountService.SaveRegister(myaccount);
 		model.addAttribute("message","Đăng kí thành công");
 		return "auth/login";
 	}

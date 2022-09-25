@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.minh.entity.Address;
 import com.minh.entity.Product;
-import com.minh.service.OtherService;
+import com.minh.service.ProductService;
 import com.minh.service.SessionService;
 import com.minh.service.ShoppingCartService;
 
@@ -25,14 +25,14 @@ import com.minh.service.ShoppingCartService;
 @Controller
 public class ShoppingCartController {
 	@Autowired ShoppingCartService cart; 
-	@Autowired OtherService service;
 	@Autowired SessionService sessionService;
+	@Autowired ProductService productService;
 
 	// Chi tiết sản phẩm theo id
 	@RequestMapping("/product{id}")
 	public String addetail(@PathVariable Integer id, Model model) {
-		Product entity =  service.Detail(id).getProduct();
-		List<Product> items = service.Detail(id).getProducts();
+		Product entity =  productService.Detail(id).getProduct();
+		List<Product> items = productService.Detail(id).getProducts();
 		model.addAttribute("loadInfo",entity);
 	    model.addAttribute("items", items);	
 	    return "home/product"; 
@@ -105,7 +105,7 @@ public class ShoppingCartController {
 	@PostMapping("/checkout")
 	public String checkout2(Model model,  @ModelAttribute("addressForm") @Valid Address entity, Errors errors, Principal principal) throws Exception{
 		String userName = principal.getName();
-		service.Checkout(entity, userName);
+		productService.Checkout(entity, userName);
 		return "home/ok"; 
 	}
 	

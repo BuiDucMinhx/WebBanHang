@@ -1,4 +1,4 @@
-package com.minh.mailerService;
+package com.minh.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MailInfo {
+public class MailInfoModel {
 	String from;
 	String to;
 	String[] cc;
@@ -17,7 +17,7 @@ public class MailInfo {
 	String[] attachments;
 
 	
-	public MailInfo(String to, String subject, String body) {
+	public MailInfoModel(String to, String subject, String body) {
 		this.from = "MXGEAR <rongkho2@gmail.com>";
 		this.to = to;
 		this.subject = subject;

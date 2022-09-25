@@ -18,7 +18,7 @@
 									<h3 class="mb10">Đăng kí</h3>
 								</div>
 								<!-- Form -->
-								<i th:text="${message}" style="color: red"></i>
+								<div th:text="${msg}" style="color: red" class="text-danger text-center text-uppercase"></div>
 								<form action="/register" method=post th:object="${register}">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div class="form-group">
@@ -54,7 +54,6 @@
 									</div>
 								</div>
 								<!-- /Form -->
-								<div th:text="${msg}" class="text-danger text-center"></div>
 							</div>
 						</div>
 					</div>
