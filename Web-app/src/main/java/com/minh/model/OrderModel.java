@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-
 @Entity
 public class OrderModel {
 	@Id

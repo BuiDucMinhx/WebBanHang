@@ -33,7 +33,6 @@ public class i18NConfig implements WebMvcConfigurer {
 		return cookie;
 	}
 	
-	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();

@@ -1,7 +1,5 @@
 ;(function () {
-	
 	'use strict';
-
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -14,8 +12,6 @@
     			$('.js-fh5co-nav-toggle').removeClass('active');
 				
 	    	}
-	    
-	    	
 	    }
 		});
 
@@ -67,7 +63,6 @@
 
 
 	var burgerMenu = function() {
-
 		$('body').on('click', '.js-fh5co-nav-toggle', function(event){
 			var $this = $(this);
 
@@ -256,7 +251,6 @@
 	};
 
 	var sliderMain = function() {
-		
 	  	$('#fh5co-hero .flexslider').flexslider({
 			animation: "fade",
 			slideshowSpeed: 5000,
@@ -284,7 +278,6 @@
 	};
 
 	var testimonialCarousel = function(){
-		
 		var owl = $('.owl-carousel-fullwidth');
 		owl.owlCarousel({
 			items: 1,
@@ -295,7 +288,6 @@
 			smartSpeed: 800,
 			autoHeight: true
 		});
-
 	};
 
 	
@@ -312,6 +304,4 @@
 		sliderMain();
 		testimonialCarousel();
 	});
-
-
 }());

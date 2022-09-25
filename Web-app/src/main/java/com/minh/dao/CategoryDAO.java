@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.minh.entity.Category;
 
 public interface CategoryDAO extends JpaRepository<Category, Integer>{
-	@Query(value="SELECT * FROM categories", nativeQuery = true)
+	@Query(value = "SELECT * FROM categories", nativeQuery = true)
 	List<Category> AllLoai();
-	
 }

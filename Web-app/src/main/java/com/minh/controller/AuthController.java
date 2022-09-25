@@ -25,8 +25,6 @@ import com.minh.service.UserService;
 public class AuthController {
 	@Autowired SessionService sessionService;
 	@Autowired UserService userService;
-	@Autowired MailerService mailer;
-    @Autowired UserService validationService;
 	@Autowired AccountService accountService;
 	
 	@Autowired BCryptPasswordEncoder pe;
@@ -104,7 +102,7 @@ public class AuthController {
 	
 	@PostMapping("/newaccount")
 	public String newaccount(Model model, @ModelAttribute("account") @Valid MyAccountModel myaccount, BindingResult result) throws MessagingException {
-		String err = validationService.validatepass(myaccount);
+		String err = userService.validatepass(myaccount);
 		myaccount.setEmail(sessionService.get("email"));
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);

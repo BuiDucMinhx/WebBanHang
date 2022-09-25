@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)" ng-app="MyApp" >
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,9 +58,8 @@
 	<link rel="stylesheet" href="css/flexslider.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
 	<link rel="stylesheet" href="css/style1.css">
-	
-	
-	
+	<!-- Main AngularJs -->
+	<script src = "js/angularJs.js"></script>
   </head>
   <body>
    	<!-- Header -->
@@ -74,5 +73,4 @@
    	<!-- Footer -->
     <footer th:replace="~{/fragments/footer :: footer}"></footer>
   </body>
-
 </html>

@@ -1,8 +1,6 @@
 package com.minh.entity;
 
-
 public class MyItem {
-
     private String time;
     private int value;
 

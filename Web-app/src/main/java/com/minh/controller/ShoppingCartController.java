@@ -24,7 +24,7 @@ import com.minh.service.ShoppingCartService;
 // Các điều khiển liên quan đến đặt hàng và giỏ hàng
 @Controller
 public class ShoppingCartController {
-	@Autowired ShoppingCartService cart; 
+	@Autowired ShoppingCartService cartService; 
 	@Autowired SessionService sessionService;
 	@Autowired ProductService productService;
 
@@ -41,23 +41,23 @@ public class ShoppingCartController {
 	// Vào giỏ hàng
 	@RequestMapping("/cart")
 	public String view(Model model) {
-		model.addAttribute("cart", cart); 
-		sessionService.set("count", cart.getCount());
+		model.addAttribute("cart", cartService); 
+		sessionService.set("count", cartService.getCount());
 		return "home/cart"; 
 	}
 	
 	// Thêm vào giỏ
 	@RequestMapping("/cart/add/{id}")
 	public String add(@PathVariable int id) {
-		cart.add(id);
-		sessionService.set("count",  cart.getCount());
+		cartService.add(id);
+		sessionService.set("count",  cartService.getCount());
 		return "redirect:/cart"; // direct đến cart
 	}
 	
 	// Tính tổng tiền
 	@ModelAttribute("total")
 	public double total(){
-		List<Product> list = new ArrayList<>(cart.getItema());
+		List<Product> list = new ArrayList<>(cartService.getItems());
 		double total = 0;
 		for(Product i: list) {
 			total = total + i.getPrice() * i.getQty();
@@ -69,24 +69,24 @@ public class ShoppingCartController {
 	// Xóa
 	@RequestMapping("/cart/remove/{id}")
 	public String remove(@PathVariable("id") int id) {
-		cart.remove(id);
-		sessionService.set("count", cart.getCount());
+		cartService.remove(id);
+		sessionService.set("count", cartService.getCount());
 		return "redirect:/cart"; 
 	}
 	
 	// Update
 	@RequestMapping("/cart/update/{id}")
 	public String update(@PathVariable("id") int id, @RequestParam("qty") Integer qty) {
-		cart.update(id,qty);	
-		sessionService.set("count", cart.getCount());
+		cartService.update(id,qty);	
+		sessionService.set("count", cartService.getCount());
 		return "redirect:/cart"; 
 	}
 	
 	// Clear
 	@RequestMapping("/cart/clear")
 	public String clear() {
-		sessionService.set("count", cart.getCount());
-		cart.clear();
+		sessionService.set("count", cartService.getCount());
+		cartService.clear();
 		return "redirect:/cart"; 
 	}
 	
@@ -95,7 +95,7 @@ public class ShoppingCartController {
 	@GetMapping("/checkout")
 	public String checkout(Model model, @ModelAttribute("total") Double total) {
 		Address address = new Address();
-		model.addAttribute("cart", cart);
+		model.addAttribute("cart", cartService);
 		model.addAttribute("addressForm", address);
 		return "home/checkout"; 
 	}
@@ -108,5 +108,4 @@ public class ShoppingCartController {
 		productService.Checkout(entity, userName);
 		return "home/ok"; 
 	}
-	
 }

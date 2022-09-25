@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @SuppressWarnings("serial")
 @Data
 @Getter
@@ -35,8 +34,6 @@ public class Role implements Serializable{
 	public Role(String id, String name) {
 		super();
 		this.id = id;
-		this.name = name;
-		
-		
+		this.name = name;	
 	}
 }

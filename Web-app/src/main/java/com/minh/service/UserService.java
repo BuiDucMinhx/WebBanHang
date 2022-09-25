@@ -17,8 +17,6 @@ import com.minh.dao.AccountDAO;
 import com.minh.entity.Account;
 import com.minh.model.MyAccountModel;
 
-
-
 @Service
 public class UserService implements UserDetailsService{
 	@Autowired AccountDAO accountDao;

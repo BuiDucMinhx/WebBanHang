@@ -15,7 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-
 public class AccountModel {
 	@Id
 	private String username;

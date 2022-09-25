@@ -37,7 +37,6 @@ public class RestfulAPIController {
 	@Autowired AccountDAO accountDao; 
 	@Autowired DetailDAO detaildao;
 	
-	
 	//Product
 	@GetMapping("/rest/products")
 	public List<Product>  getAll1(Model model) {

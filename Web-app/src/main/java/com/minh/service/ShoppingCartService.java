@@ -21,7 +21,7 @@ public interface ShoppingCartService {
 	void clear();
 
 	//Lấy tất cả các 
-	Collection <Product> getItema();
+	Collection <Product> getItems();
 
 	//Lấy tổng số lượng 
 	int getCount();

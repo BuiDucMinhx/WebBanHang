@@ -49,7 +49,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired AuthorityDAO authoritydao;
 	@Autowired MailerService mailer;
 	
-	
 	@Override
 	public ProductModel Detail(Integer id) {
 		ProductModel Productmodel = new ProductModel();
@@ -60,7 +59,6 @@ public class ProductServiceImpl implements ProductService {
 	    Productmodel.setProducts(items);
 		return Productmodel;
 	}
-	
 	
 	// Listloai
 	@Override
@@ -92,7 +90,6 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 	
-
 	@Override
 	public Map<String, Integer> surveyMapInventory(){
 		Map<String, Integer> surveyMap = new LinkedHashMap<>();
@@ -155,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
 	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	        String strDate = formatter.format(date);
             
-	        List<Product> listItem = new ArrayList<>(cart.getItema());
+	        List<Product> listItem = new ArrayList<>(cart.getItems());
 	        for (Product i : listItem) {			
 	            Product product = productDao.getById(i.getId());
 	            Order order = new Order(entity.getAddress(),String.valueOf(code),false,i.getQty(),strDate,account,product);

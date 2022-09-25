@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/site/layout::dynamic(~{::body})}"
-	>
+	th:replace="~{/site/layout::dynamic(~{::body})}">
 <head>
 
 <meta charset="utf-8">
@@ -96,11 +95,6 @@
             </div>
         </div>
     </div> <!-- End brands area -->
-    <script >
-        var app = angular.module('MyApp', [])
-        app.controller('MyController', function ($scope) {
-            $scope.IsVisible = false;
-        });
-    </script>
+
 </body>
 </html>

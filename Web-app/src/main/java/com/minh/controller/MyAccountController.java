@@ -24,7 +24,7 @@ import com.minh.service.UserService;
 
 // Quản lí tải khoản của tôi
 @Controller
-public class MyaccountController {
+public class MyAccountController {
 	@Autowired UserService validationService;
 	@Autowired AccountService accountService;
 	
