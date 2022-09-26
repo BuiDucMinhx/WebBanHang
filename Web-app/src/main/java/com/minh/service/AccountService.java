@@ -35,4 +35,9 @@ public interface AccountService {
 	int sendCodeEmail(String email);
 
 	void SaveRegister(MyAccountModel myaccount);
+
+	void forgetPassword(String email);
+
+	void newPassword(String username, String password);
+
 }

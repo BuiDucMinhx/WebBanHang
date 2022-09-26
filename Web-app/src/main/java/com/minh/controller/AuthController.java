@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.minh.model.CodeModel;
 import com.minh.model.MyAccountModel;
 import com.minh.service.AccountService;
-import com.minh.service.MailerService;
 import com.minh.service.SessionService;
 import com.minh.service.UserService;
 
@@ -111,6 +111,38 @@ public class AuthController {
 	    }
 		accountService.SaveRegister(myaccount);
 		model.addAttribute("message","Đăng kí thành công");
+		return "auth/login";
+	}
+	// Quên mật khẩu______________________________________________________________________________
+	@RequestMapping("/forget")
+	public String forgetPassword(Model model) {
+		return "auth/forgetpassword";
+	}
+	
+	@PostMapping("/sendlink")
+	public String sendlink(Model model,@ModelAttribute("register") MyAccountModel entity){
+		accountService.forgetPassword(entity.getEmail());
+		sessionService.set("email", entity.getEmail());
+		model.addAttribute("message","Kiểm tra email để reset password");
+		return "auth/login";
+	}
+	
+	@RequestMapping("/reset")
+	public String reset(Model model) {
+		MyAccountModel myaccount = new MyAccountModel();
+		model.addAttribute("account1", myaccount);
+		return "auth/reset";
+	}
+	
+	@PostMapping("/reset1")
+	public String reset(Model model, @ModelAttribute("account1") @Valid MyAccountModel myaccount, BindingResult result) {
+		String err = userService.validatepass(myaccount);
+		if (!err.isEmpty()) {
+	        ObjectError error = new ObjectError("globalError", err);
+	        result.addError(error);
+	        return "auth/reset";
+	    }
+		accountService.newPassword(sessionService.get("email"), myaccount.getNewpassword());
 		return "auth/login";
 	}
 }

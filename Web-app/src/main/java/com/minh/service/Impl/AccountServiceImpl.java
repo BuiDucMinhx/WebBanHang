@@ -122,7 +122,7 @@ public class AccountServiceImpl implements AccountService {
 		try {
 			mailer.send(email, "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
 		} catch (MessagingException e) {
-			
+			e.printStackTrace();
 		}
 		return code;
 	}
@@ -144,5 +144,19 @@ public class AccountServiceImpl implements AccountService {
 		addressDao.saveAndFlush(address);
 	}
 	
+	@Override
+	public void forgetPassword(String email) {
+		try {
+			mailer.send(email, "Nhấp vào link sau để reset mật khẩu của bạn", "http://localhost:8080/reset");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@Override
+	public void newPassword(String username, String password) {
+		Account account = accountDao.getById(username);
+		account.setPassword(pe.encode(password));
+		accountDao.save(account);
+	}
 }

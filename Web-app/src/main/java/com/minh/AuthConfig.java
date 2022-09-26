@@ -1,5 +1,7 @@
 package com.minh;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.minh.service.UserService;
 
@@ -53,8 +57,11 @@ public class AuthConfig extends WebSecurityConfigurerAdapter{
 			
 			.usernameParameter("username")
 			.passwordParameter("password");
-		http.rememberMe()
-			.rememberMeParameter("remember");
+		
+		// Rememberme
+		http.authorizeRequests().and() //
+			.rememberMe().tokenRepository(this.persistentTokenRepository()) //
+			.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 		
 		// Đăng xuất
 		http.logout()
@@ -72,5 +79,13 @@ public class AuthConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userService);		
+	}
+
+	
+	// Token stored in Memory (Of Web Server).
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+	    InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
+	    return memory;
 	}
 }

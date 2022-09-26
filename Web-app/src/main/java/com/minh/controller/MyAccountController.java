@@ -25,7 +25,7 @@ import com.minh.service.UserService;
 // Quản lí tải khoản của tôi
 @Controller
 public class MyAccountController {
-	@Autowired UserService validationService;
+	@Autowired UserService userService;
 	@Autowired AccountService accountService;
 	
     @GetMapping("/tab1")
@@ -55,7 +55,7 @@ public class MyAccountController {
     
     @PostMapping("/update")
 	public String saveChange(Model model, @ModelAttribute("user") @Valid MyAccountModel entity, Errors errors, BindingResult result, Principal principal) {		
-    	String err = validationService.validateUser(principal, entity);
+    	String err = userService.validateUser(principal, entity);
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
 	        result.addError(error);
