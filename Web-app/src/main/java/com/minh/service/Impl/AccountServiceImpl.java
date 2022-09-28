@@ -1,9 +1,14 @@
 package com.minh.service.Impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +22,14 @@ import com.minh.dao.DetailDAO;
 import com.minh.dao.OrderDAO;
 import com.minh.dao.ProductDAO;
 import com.minh.dao.RoleDAO;
+import com.minh.dao.VerificationTokenDAO;
 import com.minh.entity.Account;
 import com.minh.entity.Address;
 import com.minh.entity.Authority;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
 import com.minh.entity.Role;
+import com.minh.entity.VerificationToken;
 import com.minh.model.MyAccountModel;
 import com.minh.service.AccountService;
 import com.minh.service.MailerService;
@@ -120,6 +127,8 @@ public class AccountServiceImpl implements AccountService {
 	public int sendCodeEmail(String email) {
 		int code = (int) Math.floor(((Math.random() * 899999) + 100000));
 		try {
+			String token = UUID.randomUUID().toString();
+			createVerificationToken(email, token);
 			mailer.send(email, "Mã xác nhận đăng kí tài khoản MXgear", String.valueOf(code));
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -147,16 +156,42 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void forgetPassword(String email) {
 		try {
-			mailer.send(email, "Nhấp vào link sau để reset mật khẩu của bạn", "http://localhost:8080/reset");
+			String token = UUID.randomUUID().toString();
+			createVerificationToken(email, token);
+			System.out.println("http://localhost:8080/reset?token="+token);
+			mailer.send(email, "Nhấp vào link sau để reset mật khẩu của bạn", "http://localhost:8080/reset?token="+token);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	DateFormat formatter = new SimpleDateFormat("YYYY-MM-DD"); 
+	
 	@Override
-	public void newPassword(String username, String password) {
+	public boolean newPassword(String username, String password, String token) {
+		VerificationToken verificationToken = verificationDao.getByToken(token);
+	    Calendar cal = Calendar.getInstance();
+		if( verificationToken == null || ((verificationToken.getExpirydate().getTime() - cal.getTime().getTime()) <=0 )) {
+			System.out.println(verificationToken.getExpirydate().getTime()+" - " + cal.getTime().getTime() );
+			return false;
+		}
+		
 		Account account = accountDao.getById(username);
 		account.setPassword(pe.encode(password));
 		accountDao.save(account);
+		return true;
+	}
+	
+	@Autowired
+	VerificationTokenDAO verificationDao;
+	
+	@Override
+	public void createVerificationToken(String email, String token) {
+		VerificationToken myToken = new VerificationToken();
+		myToken.setUsername(email);
+		myToken.setToken(token);
+		java.util.Date date = new java.util.Date();    
+		myToken.setExpirydate(date);
+		verificationDao.save(myToken);
 	}
 }

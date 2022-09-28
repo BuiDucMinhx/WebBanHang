@@ -39,11 +39,11 @@ public class Product implements Serializable {
 	String review;
 	Double price;
 	Integer qty; 
+	Boolean available;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
-	Boolean available;
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")

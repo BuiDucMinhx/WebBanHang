@@ -1,6 +1,6 @@
-package com.minh.entity;
+package com.minh.model;
 
-public class MyItem {
+public class MyItemModel {
     private String time;
     private int value;
 

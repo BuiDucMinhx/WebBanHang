@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
+import com.minh.entity.Account;
 import com.minh.entity.Address;
 import com.minh.entity.Authority;
 import com.minh.model.MyAccountModel;
@@ -38,6 +39,8 @@ public interface AccountService {
 
 	void forgetPassword(String email);
 
-	void newPassword(String username, String password);
+	boolean newPassword(String username, String password, String token);
+
+	void createVerificationToken(String email, String token);
 
 }

@@ -10,10 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.minh.model.CodeModel;
 import com.minh.model.MyAccountModel;
 import com.minh.service.AccountService;
@@ -128,8 +129,10 @@ public class AuthController {
 	}
 	
 	@RequestMapping("/reset")
-	public String reset(Model model) {
+	public String reset(Model model, @RequestParam("token") String token) {
 		MyAccountModel myaccount = new MyAccountModel();
+		sessionService.set("token", token);
+		
 		model.addAttribute("account1", myaccount);
 		return "auth/reset";
 	}
@@ -137,12 +140,18 @@ public class AuthController {
 	@PostMapping("/reset1")
 	public String reset(Model model, @ModelAttribute("account1") @Valid MyAccountModel myaccount, BindingResult result) {
 		String err = userService.validatepass(myaccount);
+		String token = sessionService.get("token");
+		
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
 	        result.addError(error);
 	        return "auth/reset";
 	    }
-		accountService.newPassword(sessionService.get("email"), myaccount.getNewpassword());
+
+		boolean check = accountService.newPassword(sessionService.get("email"), myaccount.getNewpassword(),token);
+		if(check == false) {
+			return "auth/error";
+		}
 		return "auth/login";
 	}
 }
