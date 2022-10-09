@@ -12,19 +12,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter 
 @Table(name = "Address")
 public class Address implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -42,9 +40,8 @@ public class Address implements Serializable{
 	@Email(message = "Không đúng định dạng email")
 	private String email;
 	
-
 	@ManyToOne()
-	@JoinColumn(name = "Username")
+	@JoinColumn(name = "username")
 	Account account;
 	
 	public Address(String country, String firstname, String lastname,String address, String phone, 
@@ -57,7 +54,5 @@ public class Address implements Serializable{
 		this.phone = phone;
 		this.email = email;
 		this.account = account;
-		
 	}
-	
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.minh.model.CodeModel;
 import com.minh.model.MyAccountModel;
+import com.minh.model.ResetModel;
 import com.minh.service.AccountService;
 import com.minh.service.SessionService;
 import com.minh.service.UserService;
@@ -132,23 +133,21 @@ public class AuthController {
 	public String reset(Model model, @RequestParam("token") String token) {
 		MyAccountModel myaccount = new MyAccountModel();
 		sessionService.set("token", token);
-		
 		model.addAttribute("account1", myaccount);
 		return "auth/reset";
 	}
 	
 	@PostMapping("/reset1")
-	public String reset(Model model, @ModelAttribute("account1") @Valid MyAccountModel myaccount, BindingResult result) {
-		String err = userService.validatepass(myaccount);
+	public String reset(Model model, @ModelAttribute("account1") ResetModel resetModel, BindingResult result) {
+		String err = userService.validatePassReset(resetModel);
 		String token = sessionService.get("token");
-		
+
 		if (!err.isEmpty()) {
 	        ObjectError error = new ObjectError("globalError", err);
 	        result.addError(error);
 	        return "auth/reset";
 	    }
-
-		boolean check = accountService.newPassword(sessionService.get("email"), myaccount.getNewpassword(),token);
+		boolean check = accountService.newPassword(resetModel.getNewpassword(),token);
 		if(check == false) {
 			return "auth/error";
 		}

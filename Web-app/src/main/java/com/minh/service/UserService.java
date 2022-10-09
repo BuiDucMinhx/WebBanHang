@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.minh.dao.AccountDAO;
 import com.minh.entity.Account;
 import com.minh.model.MyAccountModel;
+import com.minh.model.ResetModel;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -72,6 +73,18 @@ public class UserService implements UserDetailsService{
 		String message = "";
         if (!user.getNewpassword().equals(user.getRepassword())) {
         	message = "Mật khẩu không trùng khớp ! ";
+        }
+        return message;
+    }
+	
+	public String validatePassReset(ResetModel user) {
+		String message = "";
+		if(user.getNewpassword().equals("")) {
+        	message = "Mật khẩu mới ko đc bỏ trống ! ";
+        }else if (user.getRepassword().equals("")) {
+        	message = "Mật khẩu nhập lại không được bỏ trống ! ";
+        }else if(!user.getNewpassword().equals(user.getRepassword())) {
+        	message = "Mật khẩu ko trùng khớp ! ";
         }
         return message;
     }

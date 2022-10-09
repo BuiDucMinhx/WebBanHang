@@ -61,7 +61,7 @@
                                     </tr>
                                 </thead>
                                 
-									<form th:each="item: ${cart.itema}" th:action="@{/cart/update/__${item.id}__}" method="post">
+									<form th:each="item: ${cart.items}" th:action="@{/cart/update/__${item.id}__}" method="post">
 										<input type="hidden" name="id" value="${item.id}">
 										<tr>
 											<td th:text="${item.id}"></td>

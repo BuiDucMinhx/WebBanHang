@@ -1,29 +1,29 @@
 package com.minh.entity;
 
 
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Verifytoken")
-public class VerificationToken {
+public class VerifyToken implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	private static final int EXPIRATION = 60 * 24;
 	
 	@Id
@@ -34,8 +34,8 @@ public class VerificationToken {
 
 	private String username;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "expridate")
-	private Date expirydate;
+    @CreationTimestamp
+	private Timestamp expridate;
+
     
 }

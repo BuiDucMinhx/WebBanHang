@@ -3,14 +3,14 @@ package com.minh.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
-import com.minh.entity.Account;
 import com.minh.entity.Address;
 import com.minh.entity.Authority;
-import com.minh.model.MyAccountModel;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
+import com.minh.model.MyAccountModel;
 
 @Service
 public interface AccountService {
@@ -39,8 +39,9 @@ public interface AccountService {
 
 	void forgetPassword(String email);
 
-	boolean newPassword(String username, String password, String token);
+	boolean newPassword(String password, String token);
 
 	void createVerificationToken(String email, String token);
 
+	
 }

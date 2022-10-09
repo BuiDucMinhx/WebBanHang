@@ -11,22 +11,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@SuppressWarnings("serial")
+
 @Data
-@Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="Roles")
 public class Role implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String id;
 	private String name;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "role")
 	List<Authority> authorities;

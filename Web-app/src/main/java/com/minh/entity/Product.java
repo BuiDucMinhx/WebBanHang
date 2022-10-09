@@ -28,7 +28,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "Products")
 public class Product implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	Integer id;
 	String name;
@@ -42,16 +44,15 @@ public class Product implements Serializable {
 	Boolean available;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
+	@Column(name = "createdate")
 	Date createDate = new Date();
 	
 	@ManyToOne
-	@JoinColumn(name = "Categoryid")
+	@JoinColumn(name = "categoryid")
 	Category category;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Order> Order;
-	
-	
+		
 }

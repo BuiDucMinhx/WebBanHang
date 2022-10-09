@@ -1,5 +1,6 @@
 package com.minh.service.Impl;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.minh.dao.AccountDAO;
 import com.minh.dao.AddressDAO;
 import com.minh.dao.AuthorityDAO;
@@ -29,7 +32,8 @@ import com.minh.entity.Authority;
 import com.minh.entity.Detail;
 import com.minh.entity.Order;
 import com.minh.entity.Role;
-import com.minh.entity.VerificationToken;
+import com.minh.entity.VerifyToken;
+import com.minh.model.EncodeModel;
 import com.minh.model.MyAccountModel;
 import com.minh.service.AccountService;
 import com.minh.service.MailerService;
@@ -153,10 +157,12 @@ public class AccountServiceImpl implements AccountService {
 		addressDao.saveAndFlush(address);
 	}
 	
+	
+	
 	@Override
 	public void forgetPassword(String email) {
 		try {
-			String token = UUID.randomUUID().toString();
+			String token = EncodeModel.encode(email);;
 			createVerificationToken(email, token);
 			System.out.println("http://localhost:8080/reset?token="+token);
 			mailer.send(email, "Nhấp vào link sau để reset mật khẩu của bạn", "http://localhost:8080/reset?token="+token);
@@ -168,14 +174,14 @@ public class AccountServiceImpl implements AccountService {
 	DateFormat formatter = new SimpleDateFormat("YYYY-MM-DD"); 
 	
 	@Override
-	public boolean newPassword(String username, String password, String token) {
-		VerificationToken verificationToken = verificationDao.getByToken(token);
+	public boolean newPassword(String password, String token) {
+		VerifyToken verificationToken = verificationDao.getByToken(token);
 	    Calendar cal = Calendar.getInstance();
-		if( verificationToken == null || ((verificationToken.getExpirydate().getTime() - cal.getTime().getTime()) <=0 )) {
-			System.out.println(verificationToken.getExpirydate().getTime()+" - " + cal.getTime().getTime() );
+	    long minExistToken = (cal.getTime().getTime() - verificationToken.getExpridate().getTime())/(60000);
+	    if( verificationToken == null || minExistToken > 60 ) {
 			return false;
 		}
-		
+		String username = EncodeModel.decode(token);
 		Account account = accountDao.getById(username);
 		account.setPassword(pe.encode(password));
 		accountDao.save(account);
@@ -185,13 +191,20 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	VerificationTokenDAO verificationDao;
 	
+
 	@Override
 	public void createVerificationToken(String email, String token) {
-		VerificationToken myToken = new VerificationToken();
-		myToken.setUsername(email);
-		myToken.setToken(token);
-		java.util.Date date = new java.util.Date();    
-		myToken.setExpirydate(date);
-		verificationDao.save(myToken);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+		VerifyToken Existtoken =  verificationDao.getByToken(token);
+		if(!(Existtoken == null)) {
+			verificationDao.UpdateToken(token, timestamp, email);
+		}else {
+			VerifyToken newToken = new VerifyToken();
+			newToken.setUsername(email);
+			newToken.setToken(token);
+			newToken.setExpridate(timestamp);
+			verificationDao.save(newToken);
+		}
 	}
+
 }

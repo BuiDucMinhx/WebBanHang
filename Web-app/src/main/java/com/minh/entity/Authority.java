@@ -13,21 +13,23 @@ import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
-@SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "Authorities", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"Username","RoleId"})
+		@UniqueConstraint(columnNames = {"username","roleId"})
 })
 public class Authority implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne
-	@JoinColumn(name = "Username")
+	@JoinColumn(name = "username")
 	private Account account;
 	
 	@ManyToOne
-	@JoinColumn(name = "Roleid")
+	@JoinColumn(name = "roleid")
 	private Role role;
 }

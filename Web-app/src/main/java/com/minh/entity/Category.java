@@ -11,15 +11,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
-@SuppressWarnings("serial")
+
 @Data
 @Entity
 @Table(name = "Categories")
 public class Category implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	int id;
 	String name;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	List<Product> products;

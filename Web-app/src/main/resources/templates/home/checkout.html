@@ -44,7 +44,7 @@
 							</div>
 						</div>
 						<div class="panel-body">
-							<div th:each="item : ${cart.itema}">
+							<div th:each="item : ${cart.items}">
 								<div class="form-group">
 									<div class="col-sm-3 col-xs-3">
 										<img class="img-responsive" th:src="@{/imgs/__${item.image}__}" />
